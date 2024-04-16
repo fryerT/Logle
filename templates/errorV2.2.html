@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<!-- Prevents Caching, Should remove this Eventually -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+
+
+
+<!-- icon image -->
+<link rel="shortcut icon" href="{{ url_for('static', filename='logleIcon.ico') }}">
+
+<!-- style sheet -->
+<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'errorStylesV2.2.css')}}">
+
+<!-- meta information -->
+<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+<meta charset = "UTF-8">
+<meta http-equiv = "X-UA-Compatible" content = "ie = edge">
+
+
+<script>
+	<!-- used to submit form -->
+	function submit(formId) {
+		document.getElementById(formId).submit();
+	}
+</script>
+
+<form id = 'returnHome' action = '{{url_for("home")}}'></form>
+
+<html lang = 'en'>
+	<div class = 'wrapper'>
+		<div class = 'error'>ERROR</div>
+		<div class = 'message'>-Check your inputs<br>-Make sure Javascript and Cookies are enabled<br>-The user may have hidden their logs</div>
+		<div class = 'bannerLeft'></div>
+		<div class = 'bannerRight'></div>
+		<input type = 'submit' class = 'rtnBtn' onclick = 'submit("returnHome")' value = 'Return'></div>
+	</div>
+</html>

@@ -1,0 +1,131 @@
+/* variables */
+:root {
+	--backgroundColorMain: #362c36;
+	--textColor: #f7f6f0;
+	--errorColor: #ff0000;
+	--borderColor: 	#a7cbd5;
+	--defaultFont: monospace;
+	--backgroundColorSecondary: #4d4c59;
+	--backgroundColorHover: #71777d;
+}
+
+/* globals */
+html {
+	background-color: var(--backgroundColorMain);
+	height: 95vh;
+	font-family: var(--defaultFont);
+	padding: 0;
+}
+
+/* phone view */
+@media (max-width: 450px) {
+	.wrapper {
+		grid-template-areas:
+				'.'
+				'error' 
+				'msg'
+				'rtn'
+				'.';
+		grid-template-rows: 40vw 40vw 35vw 5vw auto;
+		grid-template-columns: 1fr;
+	}
+
+	.error { font-size: 30vw; text-decoration-line: underline; }
+
+	.message { font-size: 3.5vw; }
+
+	.rtnBtn {
+		font-size: 8.75vw;
+		border-radius: 1vw;
+		border: 0.5vw solid var(--errorColor);
+		width: 37.5vw;
+		height: 9.6875vw;
+		line-height: 1.71875vw;
+	}
+	.rtnBtn:hover, .rtnBtn:focus { box-shadow: 0 0.625vw 1vw 0 rgba(0,0,0,0.2), 0 0.46875vw 1.5625w 0 rgba(0,0,0,0.19);	}
+
+	.bannerLeft, .bannerRight { display: none; }
+}
+
+/* every other device view */
+@media (min-width: 451px) {
+
+	.wrapper {
+		grid-template-areas:
+				'banL error banR' 
+				'banL . banR' 
+				'banL msg banR' 
+				'banL rtn banR' 
+				'banL . banR' ;
+		grid-template-rows: 2vw 20vw 15vw 5vw auto;
+		grid-template-columns: 12.9vw 74.2vw 12.9vw;
+	}
+
+
+	.error { font-size: 20vw; }
+
+	.message { font-size: 2.75vw; }
+
+	.rtnBtn {
+		font-size: 7vw;
+		border-radius: 0.5vw;
+		border: 0.4vw solid var(--errorColor);
+		width: 30vw;
+		height: 7.75vw;
+		line-height: 1.375vw;
+	}
+	.rtnBtn:hover, .rtnBtn:focus { box-shadow: 0 0.5vw 1vw 0 rgba(0,0,0,0.2), 0 0.375vw 1.25vw 0 rgba(0,0,0,0.19);	}
+	
+	.leftBorder { border-left: 0.6vw solid var(--errorColor); border-right: 0.4vw solid var(--textColor); }
+	.rightBorder { border-left: 0.4vw solid var(--textColor); border-right: 0.6vw solid var(--errorColor); }
+
+}
+
+/* grid that makes up the webpage, contains .error, .message, and .rtnBtn */
+.wrapper {
+	display: grid;
+	grid-gap: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+}
+
+/* big error text at the top of the page */
+.error { 
+	font-weight: bold;
+	font-family: var(--defaultFont);
+	grid-area: error;
+	text-align: center;
+	color: var(--errorColor); 
+}
+
+/* message text that explains possible errors */
+.message {
+	font-style: italic;
+	grid-area: msg;
+	text-align: left;
+	color: var(--textColor);
+	margin: 0 2vw;
+}
+
+/* button that returns to the main page */
+.rtnBtn {
+	font-family: var(--defaultFont);
+	padding: 0vw;
+	text-align: center;
+	cursor: pointer;
+	margin: auto auto;
+	background-color: var(--backgroundColorSecondary);
+	color: var(--textColor);
+	grid-area: rtn;
+}
+.rtnBtn:hover { background-color: var(--backgroundColorHover); }
+.rtnBtn:focus { outline: none; background-color: var(--backgroundColorHover); }
+
+/* banner image on the sides of the page */
+.bannerLeft { grid-area: banL; }
+.bannerRight { grid-area: banR; }
+.bannerLeft, .bannerRight { background-size: fit; background: url(dungeonBorder5error.png); margin: 0; }
