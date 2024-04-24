@@ -1,3 +1,4 @@
+/* variables */
 :root {
 	--backgroundColorMain: #362c36;
 	--textColor: #f7f6f0;
@@ -7,8 +8,11 @@
 	--loaderBorderColor: #a7cbd5; 
 	--loaderTopBorderColor: #f7f6f0;
 	--defaultFont: monospace;
+	
+	--bannerImage: url(images/banner.png);
 }
 
+/* global */
 html {
 	background-color: var(--backgroundColorMain);
 	height: 95vh;
@@ -110,4 +114,4 @@ html {
 
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
-.bannerLeft, .bannerRight { background-size: fit; background: url(dungeonBorder5.png); margin: 0; }
+.bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }

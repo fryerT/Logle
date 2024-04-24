@@ -9,8 +9,14 @@ clientIdd = '9b48dcbb-f98f-463e-b687-0c75e79a2e93'
 clientSecrets = 'ozrRbdHOM6QeFgx5Wfv3YWLEHOmojaXL5G7tnMze'
 
 # keep the dungeon name, id, and image in the same order
-encounterName = ["Darkheart Thicket", "Black Rook Hold", "Atal Dazar", "Waycrest Manor", "Throne of the Tides","Everbloom", "Rise", "Fall"]
-encounterId = [61466, 61501, 61763, 61862, 10643, 61279, 12580, 12579]
+encounterName = ["Algeth'ar Academy", "Brackenhide Hollow", "Halls of Infusion", "Neltharus", "Ruby Life Pools", "Azure Vault", "Nokhud Offensive", "Uldaman"]
+encounterId = [62526, 62520, 62527, 62519, 62521, 62515, 62516, 62451]
+
+# html names
+loadingHtml = 'loadingV2.6.html'
+mainHtml = 'mainV3.3.html'
+displayHtml = 'displayV2.8.html'
+errorHtml = 'errorV2.3.html'
 
 
 # used to create an encounter object for easier management
@@ -191,11 +197,6 @@ def getCharacterId(characterName, specName, reportId, fightId, authToken):
 
 app = Flask(__name__)
 
-loadingHtml = 'loadingV2.5.html'
-mainHtml = 'mainV3.2.html'
-displayHtml = 'displayV2.7.html'
-errorHtml = 'errorV2.2.html'
-
 @app.route('/', methods = ['GET', 'POST'])
 def home():
 
@@ -219,7 +220,7 @@ def home():
 
         keyLevelCutoff = request.cookies.get('keyLevelCutoff')
         if keyLevelCutoff is None:
-            keyLevelCutoff = 20
+            keyLevelCutoff = 2
         
         rioInput = request.cookies.get('rio')
         if rioInput is None:

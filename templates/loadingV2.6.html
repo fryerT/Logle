@@ -7,10 +7,10 @@
 
 
 <!-- icon image -->
-<link rel="shortcut icon" href="{{ url_for('static', filename='logleIcon.ico') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'images/logleIcon.ico') }}">
 
 <!-- style sheet -->
-<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'loadingStylesV2.4.css')}}">
+<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'loadingStylesV2.5.css')}}">
 
 
 <!-- meta information -->
@@ -20,11 +20,7 @@
 
 
 <!-- script used to auto submit form data -->
-<script>
-	function autoSubmit(){
-		document.getElementById("myForm").submit();
-	}
-</script>
+<script type = 'text/javascript' src = '{{url_for("static", filename = "scripts.js")}}'></script>
 
 <!-- form -->
 <form action = '{{url_for("summary")}}' id = "myForm"></form>
@@ -33,7 +29,7 @@
 	
 	<title>Loading...</title>
 
-	<body onload = 'autoSubmit()'>
+	<body onload = 'submit("myForm")'>
 		<div class = 'wrapper'>
 			<!-- loading text -->
 			<div class = 'loadingText'>

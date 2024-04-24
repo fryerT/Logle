@@ -7,9 +7,9 @@
 <!-- -->
 
 <!-- website icon -->
-<link rel = 'shortcut icon' href = '{{ url_for("static", filename = "logleIcon.ico") }}'>
+<link rel = 'shortcut icon' href = '{{ url_for("static", filename = "images/logleIcon.ico") }}'>
 <!-- style sheet -->
-<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV2.9.css")}}'>
+<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV2.10.css")}}'>
 
 <!-- screen viewport information -->
 <meta name = 'viewport' content = 'width = device-width, initial-scale = 1.0'>
@@ -18,212 +18,13 @@
 
 
 <!-- javascript that makes it all work.. -->
-<script>
-
-	<!-- removes duplicate options from the dropdown menus -->
-	function remDupe(id) {
-		var selectElement = document.getElementById(id);
-		var i, L = selectElement.options.length - 1;
-		for (i = L; i >= 0; i--) {
-			if (selectElement[i].value === selectElement[0].value) {
-				selectElement.remove(i);
-				return 0;
-			}
-		}
-	}
-	
-	<!-- checks if the screen is a phone -->
-	function isPhone() {
-		x = window.innerWidth || document.documentElement.clientWidth;
-		
-		if (x <= 450) { return true }
-		else { return false }
-	}
-	
-	<!-- remember the status of the checkbox using cookies -->
-	function checkBoxStatus(id, theCheck) { if (theCheck == 'true') { document.getElementById(id).checked = 'true'; } }
-
-	<!-- highlights the text when the user selects a text input -->
-	function selectTextListener(id) { document.getElementById(id).addEventListener('focus', () => document.getElementById(id).select()); }
-		
-	<!-- if a toggle is clicked it updates the state -->
-	function updateStateListener(id) { document.getElementById(id).addEventListener('click', () => updateState()); }
-	
-	<!-- toggles the options container -->
-	function toggleOptions() {
-		var togOptions = document.getElementById('togOptions');
-		var togWrap = document.getElementById('togWrapper');
-		
-		if (togOptions.checked) { togWrap.style.setProperty('display', 'block'); }
-		
-		else { togWrap.style.setProperty('display', 'none'); }
-	}
-
-	<!-- specialization option -->
-	function toggleSpecialization() {
-		var checkBox = document.getElementById('specToggle');
-		var specInput = document.getElementById('specInput');
-		var spec = document.getElementById('spec');
-		
-		
-		if (checkBox.checked) {
-			specInput.value = '{{specName}}';
-			spec.style.setProperty('display', 'block');
-		}
-		
-		else {
-			specInput.value = '';
-			spec.style.setProperty('display', 'none');
-		}
-	}
-	
-	<!-- raider.io option -->
-	function toggleRio() {
-		var checkBox = document.getElementById('rioToggle');
-		
-		var rio = document.getElementById('rio');
-		var rioInp = document.getElementById('rioInput');
-		
-		var serv = document.getElementById('serv');
-		var servInp = document.getElementById('servInput');
-		
-		var chara = document.getElementById('char');
-		var charaInp = document.getElementById('charInput');
-		
-		var pasteRioCont = document.getElementById('pasteRioCont');
-		
-		
-		if (checkBox.checked) {
-			rioInp.value = '{{rioInput}}';
-			rio.style.setProperty('display', 'block');
-			
-			servInp.value = '';
-			serv.style.setProperty('display', 'none');
-			
-			charaInp.value = '';
-			chara.style.setProperty('display', 'none');
-			
-			pasteRioCont.style.setProperty('display', 'block');
-		}
-		
-		else {
-			rioInp.value = '';
-			rio.style.setProperty('display', 'none');
-			
-			servInp.value = '{{servName}}';
-			serv.style.setProperty('display', 'block');
-			
-			charaInp.value = '{{charName}}';
-			chara.style.setProperty('display', 'block');
-			
-			pasteRioCont.style.setProperty('display', 'none');
-		}
-	}
-	
-	<!-- autorun on paste option -->
-	function onPaste() { window.setTimeout(() => { document.getElementById('runBtn').click(); }, 1) }
-	function togglePasteRio() {
-	
-		togPasteBox = document.getElementById('pasteRioToggle');
-		rioInput = document.getElementById('rioInput');
-		submitForm = document.getElementById('submitForm');
-		
-		if (togPasteBox.checked) { 
-			rioInput.addEventListener('paste', onPaste); 
-			submitForm.target = '_blank';
-		}
-		
-		else { 
-			rioInput.removeEventListener('paste', onPaste); 
-			submitForm.target = '';
-		}
-	
-	}
-	
-	<!-- checks the state of the checkboxes and updates the screen accordingly -->
-	function updateState() {
-
-		var specBox = document.getElementById('specToggle');
-		var rioBox = document.getElementById('rioToggle');
-		
-		var charCont = document.getElementById('char');
-		var servCont = document.getElementById('serv');
-		var specCont = document.getElementById('spec');
-		var metCont = document.getElementById('met');
-		var keyCont = document.getElementById('keyLvl');
-		
-		var grid = document.getElementById('theGrid');
-		var optGrid = document.getElementById('togWrapper');
-		
-		phone = isPhone();
-		
-		// both boxes == checked
-		if (specBox.checked && rioBox.checked) {
-			
-			if (phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'rio rio' 'specInput specInput' 'metricDDW metricDDW' 'keyLvlDDW keyLvlDDW' '. .' 'runButton runButton'");
-				
-				optGrid.style.setProperty('height', '13.75vw');
-			}
-
-			if(!phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'rio rio' 'metricDDW keyLvlDDW' 'specInput runButton' '. .' '. .' '. .'");
-				optGrid.style.setProperty('height', '5.25vw');
-			}
-
-		}
-		
-		// rioBox == checked
-		else if (rioBox.checked) {
-			
-			if (phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'rio rio' 'metricDDW metricDDW' 'keyLvlDDW keyLvlDDW' '. .' '. .' 'runButton runButton'");
-				
-				optGrid.style.setProperty('height', '13.75vw');
-			}
-			
-			else if (!phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'rio rio' 'metricDDW keyLvlDDW' 'runButton runButton' '. .' '. .' '. .'");
-				optGrid.style.setProperty('height', '5.25vw');
-			}
-		
-		}
-		
-		// specBox == checked
-		else if (specBox.checked) {
-			
-			if (phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'charInput charInput' 'servInput servInput' 'specInput specInput' 'metricDDW metricDDW' 'keyLvlDDW keyLvlDDW' 'runButton runButton'");
-				
-				optGrid.style.setProperty('height', '9.5vw');
-			}
-		
-			else if (!phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'charInput metricDDW' 'servInput keyLvlDDW' 'specInput runButton' '. .' '. .' '. .'");	
-				optGrid.style.setProperty('height', '3.5vw');
-			}
-			
-		}
-		
-		// default grid-template-areas
-		else {
-			
-			if (phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'charInput charInput' 'servInput servInput' 'metricDDW metricDDW' 'keyLvlDDW keyLvlDDW' '. .' 'runButton runButton'");
-				
-				optGrid.style.setProperty('height', '9.5vw');
-			}
-			
-			else if (!phone) {
-				grid.style.setProperty('grid-template-areas', "'. .' 'charInput metricDDW' 'servInput keyLvlDDW' 'runButton runButton' '. .' '. .' '. .'");
-				optGrid.style.setProperty('height', '3.5vw');
-			}
-		}
-
-
-	}
-	
+<script type = 'text/javascript'>
+	var specName = '{{specName}}';
+	var charName = '{{charName}}';
+	var servName = '{{servName}}';
+	var rioInfo = '{{rioInput}}';
 </script>
+<script type = 'text/javascript' src = '{{url_for("static", filename = "scripts.js")}}'></script>
 
 <!-- post method form action to gather everything included in the content wrapper -->
 <form action = '{{url_for("home")}}' method = 'POST' id = 'submitForm'>
@@ -239,7 +40,7 @@
 	
 		<!-- logle image -->
 		<div class = "headerText">
-			<img src = "{{url_for('static', filename = 'logle0.png')}}" style = 'height: 100%; width: auto; grid-area: headerTxt;'>
+			<img class = 'logoImage'></img>
 		</div>
 
 	
@@ -572,17 +373,15 @@
 			<div class = "keyLvlText" id = 'keyLvl'>Minimum Key Level:
 				<select keyLvlSelected = "KeyLvl" type = 'int' name = 'minKeyLvlSelected' class = 'dropdownMenu' id = 'keyLvlCo'>
 					<option value = {{keyLvlCo}}>{{keyLvlCo}}</option>
-					<option value = 15>15</option>
-					<option value = 16>16</option>
-					<option value = 17>17</option>
-					<option value = 18>18</option>
-					<option value = 19>19</option>
-					<option value = 20>20</option>
-					<option value = 21>21</option>
-					<option value = 22>22</option>
-					<option value = 23>23</option>
-					<option value = 24>24</option>
-					<option value = 25>25</option>
+					<option value = 2>2</option>
+					<option value = 3>3</option>
+					<option value = 4>4</option>
+					<option value = 5>5</option>
+					<option value = 6>6</option>
+					<option value = 7>7</option>
+					<option value = 8>8</option>
+					<option value = 9>9</option>
+					<option value = 10>10</option>
 				</select>
 				<script type="text/javascript"> remDupe('keyLvlCo'); </script>
 			</div>
@@ -620,10 +419,10 @@
 			<label class = 'togTogContainer'>
 				<input type = 'checkbox' onclick = 'toggleOptions();' id = 'togOptions'></input>
 				<script>toggleOptions();</script>
-				<img class = 'togTogUnchecked' src = "{{url_for('static', filename = 'gear.png')}}" style = 'height: 100%; width: 100%;'>
-				<img class = 'togTogChecked' src = "{{url_for('static', filename = 'x.png')}}" style = 'height: 100%; width: 100%;'>
-				<img class = 'togTogUncheckedHover' src = "{{url_for('static', filename = 'gearHover.png')}}" style = 'height: 100%; width: 100%;'>
-				<img class = 'togTogCheckedHover' src = "{{url_for('static', filename = 'xHover.png')}}" style = 'height: 100%; width: 100%;'>
+				<img class = 'togTogUnchecked'></img>
+				<img class = 'togTogChecked'></img>
+				<img class = 'togTogUncheckedHover'></img>
+				<img class = 'togTogCheckedHover'></img>
 			</label>
 		</div>
 

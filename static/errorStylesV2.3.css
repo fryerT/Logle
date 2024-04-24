@@ -7,6 +7,8 @@
 	--defaultFont: monospace;
 	--backgroundColorSecondary: #4d4c59;
 	--backgroundColorHover: #71777d;
+	
+	--bannerImage: url(images/bannerError.png);
 }
 
 /* globals */
@@ -128,4 +130,4 @@ html {
 /* banner image on the sides of the page */
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
-.bannerLeft, .bannerRight { background-size: fit; background: url(dungeonBorder5error.png); margin: 0; }
+.bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }

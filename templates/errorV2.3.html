@@ -8,10 +8,10 @@
 
 
 <!-- icon image -->
-<link rel="shortcut icon" href="{{ url_for('static', filename='logleIcon.ico') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename = 'images/logleIcon.ico') }}">
 
 <!-- style sheet -->
-<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'errorStylesV2.2.css')}}">
+<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'errorStylesV2.3.css')}}">
 
 <!-- meta information -->
 <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
@@ -19,12 +19,7 @@
 <meta http-equiv = "X-UA-Compatible" content = "ie = edge">
 
 
-<script>
-	<!-- used to submit form -->
-	function submit(formId) {
-		document.getElementById(formId).submit();
-	}
-</script>
+<script type = 'text/javascript' src = '{{url_for("static", filename = "scripts.js")}}'></script>
 
 <form id = 'returnHome' action = '{{url_for("home")}}'></form>
 

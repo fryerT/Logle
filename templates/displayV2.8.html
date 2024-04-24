@@ -7,10 +7,10 @@
 
 
 <!-- icon image -->
-<link rel="shortcut icon" href="{{ url_for('static', filename='logleIcon.ico') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/logleIcon.ico') }}">
 
 <!-- style sheet -->
-<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'displayStylesV2.3.css')}}">
+<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'displayStylesV2.4.css')}}">
 
 <!-- meta information -->
 <meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
@@ -18,88 +18,7 @@
 <meta http-equiv = "X-UA-Compatible" content = "ie=edge">
 
 <!-- javascript that makes it all work -->
-<script> 
-
-	// changes the color of the parse based on percentile
-	function parseColor(parse, id) {
-		var x = document.getElementById(id);
-		x.style.color = '#ff0000';	// error text color, should only default to this when 'error' is displayed
-		var parseNumber = Number(parse);
-		if (parseNumber <= 24) {
-			x.style.color = '#889D9D';
-		}
-		else if (parseNumber >= 25 && parseNumber <= 49) {
-			x.style.color = '#1EFF0C';
-		}
-		else if (parseNumber >= 50 && parseNumber <= 74) {
-			x.style.color = '#0070FF';
-		}
-		else if (parseNumber >= 75 && parseNumber <= 94) {
-			x.style.color = '#A335EE';
-		}
-		else if (parseNumber >= 95 && parseNumber <= 98) {
-			x.style.color = '#FF8000';
-		}
-		else if (parseNumber == 99) {
-			x.style.color = '#FF7EFF';
-		}
-		else if (parseNumber == 100) {
-			x.style.color = '#E6CC80';
-		}
-	}
-
-	// used to submit forms when one of the buttons is pressed
-	function submit(formId) {
-		document.getElementById(formId).submit();
-	}
-
-	// detects the number of specs and makes buttons based on specs found
-	function specChoice() {
-	
-		if ('{{spec}}'.indexOf('&') > -1) { 
-			specChoice = document.getElementById('specChoice');
-			spec0 = document.getElementById('specBtn0');
-			spec1 = document.getElementById('specBtn1');
-			spec2 = document.getElementById('specBtn2');
-			spec3 = document.getElementById('specBtn3');
-			
-			const specList = '{{spec}}'.split(' &amp; ');
-			
-			// there will always be a minimum of 2 specs if this triggers
-			spec0.value = specList[0];
-			spec1.value = specList[1];
-			spec0.style.setProperty('display', 'block');
-			spec1.style.setProperty('display', 'block');
-			
-			specChoice.style.setProperty('height', '5.75vw');
-			
-			if (specList.length > 2) {
-				spec2.value = specList[2];
-				spec2.style.setProperty('display', 'block');
-				specChoice.style.setProperty('height', '7.7vw');
-			}
-			if (specList.length > 3) {
-				spec3.value = specList[3];
-				spec2.style.setProperty('display', 'block');
-				specChoice.style.setProperty('height', '9.75vw');
-			}
-			
-			specChoice.style.setProperty('display', 'block');
-		}
-		
-	}
-
-	// sets the spec to be queried based on the button pressed
-	function setSpecChoice(id) {
-		specClicked = document.getElementById(id);
-		newSpec = document.getElementById('newSpec');
-		
-		newSpec.value = specClicked.value;
-		
-		submit('specForm');
-	}
-
-</script>
+<script type = 'text/javascript' src = '{{url_for("static", filename = "scripts.js")}}'></script>
 
 <!-- form for the return button so it plays nice with my grid -->
 <form action = '{{url_for("home")}}' method = 'GET' id = "home"></form>
@@ -123,78 +42,78 @@
 				<div class = 'playerName'>{{name}}</div>
 				<div class = 'amount'>{{spec}}</div>
 				<div class = 'avgParse' id = 'avg'>{{avgParse}}</div>
-				<script type="text/javascript"> parseColor({{avgParse}}, 'avg'); </script>
+				<script type="text/javascript"> parseColor('{{avgParse}}', 'avg'); </script>
 			</div>
 
 			<!-- 0 -->
 			<div class = 'encWrapper' style = 'grid-area: enc0;'>
-				<img src = "{{url_for('static', filename = 'dung0.1.png')}}" class = 'encImg'>
+				<img class = 'encImage0'>
 				<div class = 'dungeon'>{{name0}}</div>
 				<div class = 'amount'>{{amount0}}{{spec0}}</div>
 				<div class = 'parse' id = 'zero'>{{parse0}}</div>
-				<script type="text/javascript"> parseColor({{parse0}}, 'zero'); </script>
+				<script type="text/javascript"> parseColor('{{parse0}}', 'zero'); </script>
 			</div>
 
 			<!-- 1 -->
 			<div class = 'encWrapper' style = 'grid-area: enc1;'>
-				<img src = "{{url_for('static', filename = 'dung1.1.png')}}" class = 'encImg'>
+				<img class = 'encImage1'>
 				<div class = 'dungeon'>{{name1}}</div>					<div class = 'amount'>{{amount1}}{{spec1}}</div>
 				<div class = 'parse' id = 'one'>{{parse1}}</div>
-				<script type="text/javascript"> parseColor({{parse1}}, 'one'); </script>
+				<script type="text/javascript"> parseColor('{{parse1}}', 'one'); </script>
 			</div>
 		
 			<!-- 2 -->
 			<div class = 'encWrapper' style = 'grid-area: enc2;'>
-				<img src = "{{url_for('static', filename = 'dung2.1.png')}}" class = 'encImg'>
+				<img class = 'encImage2'>
 				<div class = 'dungeon'>{{name2}}</div>
 				<div class = 'amount'>{{amount2}}{{spec2}}</div>
 				<div class = 'parse' id = 'two'>{{parse2}}</div>
-				<script type="text/javascript"> parseColor({{parse2}}, 'two'); </script>
+				<script type="text/javascript"> parseColor('{{parse2}}', 'two'); </script>
 			</div>
 
 			<!-- 3 -->
 			<div class = 'encWrapper' style = 'grid-area: enc3;'>
-				<img src = "{{url_for('static', filename = 'dung3.1.png')}}" class = 'encImg'>
+				<img class = 'encImage3'>
 				<div class = 'dungeon'>{{name3}}</div>
 				<div class = 'amount'>{{amount3}}{{spec3}}</div>
 				<div class = 'parse' id = 'three'>{{parse3}}</div>
-				<script type="text/javascript"> parseColor({{parse3}}, 'three'); </script>
+				<script type="text/javascript"> parseColor('{{parse3}}', 'three'); </script>
 			</div>
 					
 			<!-- 4 -->
 			<div class = 'encWrapper' style = 'grid-area: enc4;'>
-				<img src = "{{url_for('static', filename = 'dung4.1.png')}}" class = 'encImg'>
+				<img class = 'encImage4'>
 				<div class = 'dungeon'>{{name4}}</div>
 				<div class = 'amount'>{{amount4}}{{spec4}}</div>
 				<div class = 'parse' id = 'four'>{{parse4}}</div>
-				<script type="text/javascript"> parseColor({{parse4}}, 'four'); </script>
+				<script type="text/javascript"> parseColor('{{parse4}}', 'four'); </script>
 			</div>
 				
 			<!-- 5 -->
 			<div class = 'encWrapper' style = 'grid-area: enc5;'>
-				<img src = "{{url_for('static', filename = 'dung5.1.png')}}" class = 'encImg'>
+				<img class = 'encImage5'>
 				<div class = 'dungeon'>{{name5}}</div>
 				<div class = 'amount'>{{amount5}}{{spec5}}</div>
 				<div class = 'parse' id = 'five'>{{parse5}}</div>
-				<script type="text/javascript"> parseColor({{parse5}}, 'five'); </script>
+				<script type="text/javascript"> parseColor('{{parse5}}', 'five'); </script>
 			</div>
 				
 			<!-- 6 -->
 			<div class = 'encWrapper' style = 'grid-area: enc6;'>
-				<img src = "{{url_for('static', filename = 'dung6.1.png')}}" class = 'encImg'>
+				<img class = 'encImage6'>
 				<div class = 'dungeon'>{{name6}}</div>
 				<div class = 'amount'>{{amount6}}{{spec6}}</div>
 				<div class = 'parse' id = 'six'>{{parse6}}</div>
-				<script type="text/javascript"> parseColor({{parse6}}, 'six'); </script>
+				<script type="text/javascript"> parseColor('{{parse6}}', 'six'); </script>
 			</div>
 					
 			<!-- 7 -->
 			<div class = 'encWrapper' style = 'grid-area: enc7;'>
-				<img src = "{{url_for('static', filename = 'dung7.1.png')}}" class = 'encImg'>
+				<img class = 'encImage7'>
 				<div class = 'dungeon'>{{name7}}</div>
 				<div class = 'amount'>{{amount7}}{{spec7}}</div>
 				<div class = 'parse' id = 'seven'>{{parse7}}</div>
-				<script type="text/javascript"> parseColor({{parse7}}, 'seven'); </script>
+				<script type="text/javascript"> parseColor('{{parse7}}', 'seven'); </script>
 			</div>
 			
 		</div>
@@ -208,14 +127,14 @@
 	<div class = 'numOfRunsCont'>
 		<b><u>Log Count</u></b>
 		<i>
-			DHT: {{numRuns0}}<br>
-			BRH: {{numRuns1}}<br>
-			AD: {{numRuns2}}<br>
-			WM: {{numRuns3}}<br>
-			ToT: {{numRuns4}}<br>
-			EB: {{numRuns5}}<br>
-			Rise: {{numRuns6}}<br>
-			Fall: {{numRuns7}}<br>
+			AA: {{numRuns0}}<br>
+			BH: {{numRuns1}}<br>
+			HoI: {{numRuns2}}<br>
+			Nel: {{numRuns3}}<br>
+			RLP: {{numRuns4}}<br>
+			AV: {{numRuns5}}<br>
+			NO: {{numRuns6}}<br>
+			Uld: {{numRuns7}}<br>
 		</i>
 		<b>Total: {{numRunsTotal}}</b>
 	</div>

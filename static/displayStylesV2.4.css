@@ -6,6 +6,16 @@
 	--backgroundColorSecondary: #4d4c59;
 	--backgroundColorHover: #71777d;
 	--defaultFont: monospace;
+	
+	--bannerImage: url(images/banner.png);
+	--encImage0: url(images/AA.png);
+	--encImage1: url(images/BH.png);
+	--encImage2: url(images/HoI.png);
+	--encImage3: url(images/Nel.png);
+	--encImage4: url(images/RLP.png);
+	--encImage5: url(images/AV.png);
+	--encImage6: url(images/NO.png);
+	--encImage7: url(images/Uld.png);
 }
 
 /* global */
@@ -45,7 +55,7 @@ html {
 		border-radius: 1vw;
 		height: auto;
 	}
-	.encImg {
+	.encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 {
 		height: 9vw;
 		width: 9vw;
 		margin: 0.6vw;
@@ -144,10 +154,10 @@ html {
 		height: 8vw;
 		border-radius: 0.5vw;
 	}
-	.encImg { 
-		height: 100%; 
+	.encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 {
+		height: 100%;
 		width: 100%;
-		margin: 0.35vw 1vw 0.3vw 1vw; 
+		margin: 0.35vw 1vw 0.3vw 1vw;
 	}
 
 	.specChoice {
@@ -234,10 +244,14 @@ html {
 	border: none;
 }
 /* the image for the encounter that will be located inside of the encounter grid */
-.encImg {
-	grid-area: img; 	
-	background-color: var(--backgroundColorSecondary);
-}
+.encImage0 { content: var(--encImage0); }
+.encImage1 { content: var(--encImage1); }
+.encImage2 { content: var(--encImage2); }
+.encImage3 { content: var(--encImage3); }
+.encImage4 { content: var(--encImage4); }
+.encImage5 { content: var(--encImage5); }
+.encImage6 { content: var(--encImage6); }
+.encImage7 { content: var(--encImage7); }
 
 /* specialization choice grid that contains the specialization buttons */
 .specChoice {
@@ -297,7 +311,7 @@ html {
 }	
 
 /* banner settings */
-.bannerLeft, .bannerRight { background-size: fit; background: url(dungeonBorder5.png); margin: 0; }
+.bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }
 
 /* focus and hover settings for anything the user can interact with */
 .rtnBtn:focus, .specChoiceBtn:focus {
@@ -314,3 +328,4 @@ html {
 .parse { grid-area: parse; }
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
+.encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 { grid-area: img; }

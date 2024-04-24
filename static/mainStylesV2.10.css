@@ -6,6 +6,13 @@
 	--backgroundColorSecondary: #4d4c59;
 	--backgroundColorHover: #71777d;
 	--defaultFont: monospace;
+	
+	--bannerImage: url(images/banner.png);
+	--logoImage: url(images/logle0.png);
+	--togTogCheckedImage: url(images/x.png);
+	--togTogUncheckedImage: url(images/gear.png);
+	--togTogCheckedHoverImage: url(images/xHover.png);
+	--togTogUncheckedHoverImage: url(images/gearHover.png);
 }
 
 /* global */
@@ -13,6 +20,7 @@ html {
 	background-color: var(--backgroundColorMain);
 	height: 95vh;
 	font-family: var(--defaultFont);
+	cursor: default;
 }
 
 
@@ -33,6 +41,7 @@ html {
 		grid-template-rows: 18vw repeat(7, 5vw) 200vw;
 		grid-template-columns: repeat(4, 25vw);
 	}
+	
 	.contWrapper {
 		grid-template-areas:
 			'rio rio'
@@ -49,6 +58,7 @@ html {
 		margin-right: 1vw;
 		margin-top: 1vw;
 	}
+	
 	.togWrapper {
 		border-radius: 1vw;
 		border: 0.4vw solid var(--borderColor);
@@ -71,19 +81,11 @@ html {
 
 	.charText, .servText, .specText, .metricText, .keyLvlText, .rio { font-size: 5.5vw; text-align: center; }
 
-	.inputBox, .inputBoxRio {
-		border-radius: 1vw;
-		border: 0.4vw solid var(--borderColor);
-		height: 5.5vw;
-	}
-	.inputBox {
-		width: 40vw;
-		font-size: 4vw;
-	}	
-	.inputBoxRio {
-		width: 60vw;
-		font-size: 4vw;
-	}
+	.inputBox, .inputBoxRio { border-radius: 1vw; border: 0.4vw solid var(--borderColor); height: 5.5vw; }
+	
+	.inputBox { width: 40vw; font-size: 4vw; }
+	
+	.inputBoxRio { width: 60vw; font-size: 4vw;}
 
 	.dropdownMenu {
 		width: 12vw;
@@ -119,17 +121,9 @@ html {
 		width: 9vw;
 		padding: 0.5vw;
 	}
-	.togTogContainer {
-		font-size: 3vw;	
-		height: 9vw;
-		width: 9vw;
-	}
+	.togTogContainer { font-size: 3vw; height: 9vw; width: 9vw; }
 	
-	.descriptionText {
-		font-size: 2.5vw;
-		border-top: 0.4vw solid var(--borderColor);
-		padding: 1vw;
-	}
+	.descriptionText { font-size: 2.5vw; border-top: 0.4vw solid var(--borderColor); padding: 1vw; }
 
 	.bannerLeft, .bannerRight { display: none; }
 }
@@ -339,7 +333,7 @@ html {
 }
 
 /* banner settings */
-.bannerLeft, .bannerRight { background-size: fit; background: url(dungeonBorder5.png); margin: 0; }
+.bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }
 
 /* the tiny box behind the settings toggle, only visible in the non-mobile version */
 .togTogBox { position: fixed; }
@@ -354,6 +348,7 @@ html {
 	text-align: center;
 	color: var(--textColor);
 }
+
 /* changes the image of the settings toggle */
 .togTogUnchecked { display: inline; }
 .togTogCheckedHover, .togTogUncheckedHover, .togTogChecked, .togTogContainer input { display:none; }
@@ -367,8 +362,27 @@ html {
 /* hover and focus settings for everything the user can interact with */
 .inputBox:hover, .dropdownMenu:hover, .buttonStyle:hover, .inputBoxRio:hover { background-color: var(--backgroundColorHover); }
 .dropdownMenu:focus, .inputBox:focus, .buttonStyle:focus, .inputBoxRio:focus { outline: none; border-color: var(--textColor); }
+
 /* removes the drop down arrow from specialization and server text inputs that use suggestion text */
 .inputBox::-webkit-calendar-picker-indicator { display:none !important; }
+
+/* image information */
+.logoImage {
+	height: 100%;
+	width: auto;
+	grid-area: headerTxt;
+	content: var(--logoImage);
+}
+
+/* properties and images of the settings toggle */
+.togTogUnchecked, .togTogChecked, .togTogUncheckedHover, .togTogCheckedHover { height: 100%; width: 100% }
+.togTogUnchecked { content: var(--togTogUncheckedImage); }
+.togTogChecked { content: var(--togTogCheckedImage); }
+.togTogUncheckedHover { content: var(--togTogUncheckedHoverImage); }
+.togTogCheckedHover { content: var(--togTogCheckedHoverImage); }
+
+
+
 
 /* assigns grid-areas to each element */
 .charText { grid-area: charInput; }
@@ -382,3 +396,4 @@ html {
 .specToggle { grid-area: specTog; }
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
+.logoImage { grid-area: headerTxt; }
