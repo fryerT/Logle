@@ -33,7 +33,7 @@ function toggleOptions() {
 	var togWrap = document.getElementById('togWrapper');
 	
 	if (togOptions.checked) { togWrap.style.setProperty('display', 'block'); }
-	
+
 	else { togWrap.style.setProperty('display', 'none'); }
 }
 
@@ -236,15 +236,15 @@ function parseColor(parse, id) {
 
 // detects the number of specs and makes buttons based on specs found
 function specChoice() {
-
-	if ('{{spec}}'.indexOf('&') > -1) { 
+	
+	if (specName.indexOf('&') > -1) {
 		specChoice = document.getElementById('specChoice');
 		spec0 = document.getElementById('specBtn0');
 		spec1 = document.getElementById('specBtn1');
 		spec2 = document.getElementById('specBtn2');
 		spec3 = document.getElementById('specBtn3');
 		
-		const specList = '{{spec}}'.split(' &amp; ');
+		const specList = specName.split(' &amp; ');
 		
 		// there will always be a minimum of 2 specs if this triggers
 		spec0.value = specList[0];
@@ -255,6 +255,8 @@ function specChoice() {
 		specChoice.style.setProperty('height', '5.75vw');
 		
 		if (specList.length > 2) {
+			alert('1');
+			
 			spec2.value = specList[2];
 			spec2.style.setProperty('display', 'block');
 			specChoice.style.setProperty('height', '7.7vw');

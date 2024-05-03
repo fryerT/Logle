@@ -14,7 +14,7 @@ encounterId = [62526, 62520, 62527, 62519, 62521, 62515, 62516, 62451]
 
 # html names
 loadingHtml = 'loadingV2.6.html'
-mainHtml = 'mainV3.3.html'
+mainHtml = 'mainV3.4.html'
 displayHtml = 'displayV2.8.html'
 errorHtml = 'errorV2.3.html'
 

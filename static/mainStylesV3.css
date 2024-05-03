@@ -13,6 +13,10 @@
 	--togTogUncheckedImage: url(images/gear.png);
 	--togTogCheckedHoverImage: url(images/xHover.png);
 	--togTogUncheckedHoverImage: url(images/gearHover.png);
+	--checkedImage: url(images/checked.png);
+	--uncheckedImage: url(images/unchecked.png);
+	--checkedHoverImage: url(images/checkedHover.png);
+	--uncheckedHoverImage: url(images/uncheckedHover.png);
 }
 
 /* global */
@@ -21,6 +25,7 @@ html {
 	height: 95vh;
 	font-family: var(--defaultFont);
 	cursor: default;
+	padding: 0vw;
 }
 
 
@@ -66,13 +71,12 @@ html {
 		width: 36vw;
 		font-size: 3.25vw;
 		line-height: 4.5vw;
-		
 		top: 97vw;
 		right: 2vw;
 	}
 
 
-	.headerText {
+	.header {
 		font-size: 10vw;
 		border-radius: 0vw;
 		border-bottom: 0.4vw solid var(--borderColor);
@@ -107,13 +111,12 @@ html {
 	
 	.inputBox:hover, .dropdownMenu:hover, .buttonStyle:hover, .inputBoxRio:hover { box-shadow: 0 1vw 2vw 0 rgba(0,0,0,0.2), 0 0.75vw 2.5vw 0 rgba(0,0,0,0.19); }
 	
-	.rioToggle input, .specToggle input, .pasteRioToggle input { height: 3vw; width: 3vw; }
+	.unchecked, .checked, .uncheckedHover, .checkedHover { height: 3vw; width: 3vw; }
 	
 	
 	.togTogBox { 
 		top: 85vw;
 		right: 14.5vw;
-		
 		background-color: none;
 		border: none;
 		border-radius: none;
@@ -202,7 +205,7 @@ html {
 	}
 
 
-	.rioToggle input, .specToggle input, .pasteRioToggle input { height: 1vw; width: 1vw; }
+	.unchecked, .checked, .uncheckedHover, .checkedHover { height: 1vw; width: 1vw; }
 
 	.togTogContainer { 
 		font-size: 1.5vw; 
@@ -210,7 +213,7 @@ html {
 		width: 3vw;
 	}
 	
-	.headerText {
+	.header {
 		font-size: 5vw; 
 		border-bottom: 0.2vw solid var(--borderColor); 
 		line-height: 5vw;
@@ -221,8 +224,6 @@ html {
 		border-top: 0.2vw solid var(--borderColor);
 		border-radius: 0;
 		padding: 0.5vw 1vw;
-		
-		grid-area: desc;
 		width: 72.3vw;
 	}
 
@@ -231,7 +232,6 @@ html {
 	.togTogBox { 
 		top: 13.9vw;
 		right: 5.5vw;
-		
 		background-color: var(--backgroundColorSecondary);
 		border: 0.2vw solid var(--borderColor);
 		border-radius: 0.5vw;
@@ -296,7 +296,6 @@ html {
 	background-color: var(--backgroundColorSecondary);
 	color: var(--textColor);
 	-webkit-appearance: none !important;
-	padding: 0vw;	
 }
 
 /* run button */
@@ -307,20 +306,24 @@ html {
 	grid-area: runButton;
 }
 
-/* settings for all the toggles that are inside of the toggle wrapper */
-.rioToggle input, .specToggle input, .pasteRioToggle input { cursor: pointer; margin: 0vw; }
-
-/* header text */
-.headerText {
+/* header */
+.header {
 	text-align: center;
 	top: 0vw;
 	background-color: var(--backgroundColorSecondary);
 	color: var(--textColor);
 	grid-area: headerTxt;
 }
+/* image contained in the header */
+.logoImage {
+	height: 100%;
+	width: auto;
+	content: var(--logoImage);
+}
+/* end of header */
 
 /* universal settings for all text elements except the header text */
-.charText, .servText, .specText, .metricText, .keyLvlText, .rio { padding: 0vw; color: var(--textColor); text-align: center; }
+.charText, .servText, .specText, .metricText, .keyLvlText, .rio {  color: var(--textColor); text-align: center; }
 
 /* description text */
 .descriptionText {
@@ -335,8 +338,7 @@ html {
 /* banner settings */
 .bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }
 
-/* the tiny box behind the settings toggle, only visible in the non-mobile version */
-.togTogBox { position: fixed; }
+
 
 /* gear icon settings toggle */
 .togTogContainer {
@@ -348,7 +350,6 @@ html {
 	text-align: center;
 	color: var(--textColor);
 }
-
 /* changes the image of the settings toggle */
 .togTogUnchecked { display: inline; }
 .togTogCheckedHover, .togTogUncheckedHover, .togTogChecked, .togTogContainer input { display:none; }
@@ -358,31 +359,51 @@ html {
 .togTogContainer:hover input:not(:checked) ~ .togTogUnchecked { display: none; }
 .togTogContainer:hover input:checked ~ .togTogCheckedHover { display: inline; }
 .togTogContainer:hover input:checked ~ .togTogChecked { display: none; }
-
-/* hover and focus settings for everything the user can interact with */
-.inputBox:hover, .dropdownMenu:hover, .buttonStyle:hover, .inputBoxRio:hover { background-color: var(--backgroundColorHover); }
-.dropdownMenu:focus, .inputBox:focus, .buttonStyle:focus, .inputBoxRio:focus { outline: none; border-color: var(--textColor); }
-
 /* removes the drop down arrow from specialization and server text inputs that use suggestion text */
 .inputBox::-webkit-calendar-picker-indicator { display:none !important; }
-
-/* image information */
-.logoImage {
-	height: 100%;
-	width: auto;
-	grid-area: headerTxt;
-	content: var(--logoImage);
-}
-
 /* properties and images of the settings toggle */
-.togTogUnchecked, .togTogChecked, .togTogUncheckedHover, .togTogCheckedHover { height: 100%; width: 100% }
+.togTogUnchecked, .togTogChecked, .togTogUncheckedHover, .togTogCheckedHover { height: 100%; width: 100%; }
 .togTogUnchecked { content: var(--togTogUncheckedImage); }
 .togTogChecked { content: var(--togTogCheckedImage); }
 .togTogUncheckedHover { content: var(--togTogUncheckedHoverImage); }
 .togTogCheckedHover { content: var(--togTogCheckedHoverImage); }
+/* the tiny box behind the settings toggle, only visible in the non-mobile version */
+.togTogBox { position: fixed; }
+/* end of gear icon settings toggle */
 
 
 
+/* custom checkboxes */
+.checkboxContainer {
+	cursor: pointer;
+	caret-color: transparent;
+	display: block;
+	margin: 0 auto;
+	text-align: center;
+	color: var(--textColor);
+}
+
+.unchecked, .checked, .uncheckedHover, .checkedHover { vertical-align: -0.1vw; }
+.unchecked { content: var(--uncheckedImage); }
+.checked { content: var(--checkedImage); }
+.uncheckedHover { content: var(--uncheckedHoverImage); }
+.checkedHover { content: var(--checkedHoverImage); }
+
+.unchecked { display: inline; }
+.checkedHover, .uncheckedHover, .checked, .checkboxContainer input { display:none; }
+.checkboxContainer input:checked ~ .checked { display: inline; }
+.checkboxContainer input:checked ~ .unchecked { display: none; }
+.checkboxContainer:hover input:not(:checked) ~ .uncheckedHover { display: inline; }
+.checkboxContainer:hover input:not(:checked) ~ .unchecked { display: none; }
+.checkboxContainer:hover input:checked ~ .checkedHover { display: inline; }
+.checkboxContainer:hover input:checked ~ .checked { display: none; }
+/* end of custom checkboxes */
+
+
+
+/* hover and focus settings for everything the user can interact with */
+.inputBox:hover, .dropdownMenu:hover, .buttonStyle:hover, .inputBoxRio:hover { background-color: var(--backgroundColorHover); }
+.dropdownMenu:focus, .inputBox:focus, .buttonStyle:focus, .inputBoxRio:focus { outline: none; border-color: var(--textColor); }
 
 /* assigns grid-areas to each element */
 .charText { grid-area: charInput; }
@@ -397,3 +418,4 @@ html {
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
 .logoImage { grid-area: headerTxt; }
+.descriptionText { grid-area: desc; }

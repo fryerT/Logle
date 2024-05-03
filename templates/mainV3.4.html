@@ -9,7 +9,7 @@
 <!-- website icon -->
 <link rel = 'shortcut icon' href = '{{ url_for("static", filename = "images/logleIcon.ico") }}'>
 <!-- style sheet -->
-<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV2.10.css")}}'>
+<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV3.css")}}'>
 
 <!-- screen viewport information -->
 <meta name = 'viewport' content = 'width = device-width, initial-scale = 1.0'>
@@ -39,9 +39,7 @@
 	<div class = "wrapper">
 	
 		<!-- logle image -->
-		<div class = "headerText">
-			<img class = 'logoImage'></img>
-		</div>
+		<div class = "header"><img class = 'logoImage'></img></div>
 
 	
 		<!-- content wrapper that contains the raiderIO, character, server, specialization, metric, and key level inputs-->
@@ -391,24 +389,40 @@
 	
 		<!-- the options menu wrapper -->
 		<div class = 'togWrapper' id = 'togWrapper'>
-			
+		
 			<!-- specialization toggle option -->
-			<div class = 'specToggle'>Specialization:
+			<label class = 'checkboxContainer'>Specialization:
 				<input type = 'checkbox' onclick = 'toggleSpecialization();' id = 'specToggle' name = 'specToggle'></input>
 				<script>checkBoxStatus('specToggle', '{{specTog}}');toggleSpecialization();updateStateListener('specToggle')</script>
-			</div>
 				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
+
+			
 			<!-- autorun on paste for raiderIO toggle option -->
-			<div class = 'pasteRioToggle' id = 'pasteRioCont'>Paste Autorun:
+			<label class = 'checkboxContainer' id = 'pasteRioCont'>Paste Autorun:
 				<input type = 'checkbox' onclick = 'togglePasteRio();' id = 'pasteRioToggle' name = 'pasteRioToggle'></input>
 				<script>checkBoxStatus('pasteRioToggle', '{{pasteRioTog}}');togglePasteRio();</script>
-			</div>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
 			
 			<!-- raiderIO toggle option -->
-			<div class = 'rioToggle'>RaiderIO:
+			<label class = 'checkboxContainer'>RaiderIO:
 				<input type = 'checkbox' onclick = 'toggleRio();' id = 'rioToggle' name = 'rioToggle'></input>
 				<script>checkBoxStatus('rioToggle', '{{rioTog}}');toggleRio();updateStateListener('rioToggle');</script>
-			</div>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
 
 			<!-- updates the grid layout based on options when the site loads -->
 			<script>updateState();</script>
