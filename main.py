@@ -15,7 +15,7 @@ encounterId = [62526, 62520, 62527, 62519, 62521, 62515, 62516, 62451]
 # html names
 loadingHtml = 'loadingV2.6.html'
 mainHtml = 'mainV3.4.html'
-displayHtml = 'displayV2.8.html'
+displayHtml = 'displayV2.9.html'
 errorHtml = 'errorV2.3.html'
 
 
@@ -30,12 +30,6 @@ class Encounter():
         self.rParse = '0'   # rounded parse
         self.spec = ''      # spec name of the logs being used
         self.numberOfFights  = 0 # the number of logs that include the encounter
-        
-    def asdict(self):
-        return {'name': self.name, 'id': self.id, 'image': self.image,
-                    'amount': self.amount, 'parse': self.parse, 'amount': self.amount,
-                    'rAmount': self.rAmount, 'rParse': self.rParse, 'spec': self.spec,
-                    'numberOfFights': self.numberOfFights}
 
 # funciton to get OAuth 2.0 token for Warcraft logs API 2.0 calls
 def getNewToken():
@@ -71,7 +65,7 @@ def getPlayerPerformanceFromEncounter(playerName, authToken, boss_ID, spec_Name,
     return apiCall(query, vars, authToken)
 
 # function that runs the program, triggered by a button
-def RunLogle(encounter, playerName, serverName, specName, metricType, keyLevelCutoff, authToken, i):
+def RunLogle(encounter, specList, playerName, serverName, specName, metricType, keyLevelCutoff, authToken, i):
     
     global avgPar
     
@@ -102,6 +96,7 @@ def RunLogle(encounter, playerName, serverName, specName, metricType, keyLevelCu
 
         if fight['bracketData'] >= int(keyLevelCutoff) and fight['medal'] != 'none':    # adds to the total num of fights if the key is eligible
             encounter[i].numberOfFights += 1
+            specList.append(fight['spec'])
                 
             ####################################################
             ''' code = fight['report']['code']
@@ -299,6 +294,7 @@ def summary():
 
         global avgPar
         avgPar = ''
+        specList = []
         
         authToken = getNewToken()
         
@@ -311,14 +307,14 @@ def summary():
             encounter.append(Encounter(encounterName[i], encounterId[i]))
 
         # assigns each dungeon encounter to a thread
-        t0 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 0,))
-        t1 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 1,))
-        t2 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 2,))
-        t3 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 3,))
-        t4 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 4,))
-        t5 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 5,))
-        t6 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 6,))
-        t7 = threading.Thread(target = RunLogle, args = (encounter, player, serv, spec, metric, keyLevelCutoff, authToken, 7,))
+        t0 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 0,))
+        t1 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 1,))
+        t2 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 2,))
+        t3 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 3,))
+        t4 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 4,))
+        t5 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 5,))
+        t6 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 6,))
+        t7 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 7,))
         
         # start em up
         t0.start()
@@ -340,47 +336,32 @@ def summary():
         t6.join()
         t7.join()
         
-
         # if there was an error with the query, go to the error page
         if avgPar == 'Error':
             return error()
 
         avgParse(encounter)
-        
+        specList = list(dict.fromkeys(specList))
         # used in case the specName isn't specified by user so it doesn't mess up the input on main['get']
         modSpec = spec
 
+
         # only do this if specialization was not specified
         if spec == '':
-            specializationNames = []    # create a list to store spec names
+            specializationNames = []    # create a list to store spec names that have a top parse
             for i in range(len(encounter)):     # loop through each encounter
+                if encounter[i].spec != '':
+                    specializationNames.append(encounter[i].spec)   # add spec names to the list
+            specializationNames = list(dict.fromkeys(specializationNames)) # remove any duplicates
+            
+            for i in range(len(specializationNames)):
                 if i == 0:  # base case
-                    specializationNames.append(encounter[i].spec)   # add the first spec name
+                    modSpec = specializationNames[i][3:]
+                    if len(specializationNames) == 1:   # if there is only one spec, listing these would be repetitive
+                        for i in range(len(encounter)):
+                            encounter[i].spec = ''
                 else:
-                    nameExists = 0
-                    for x in range(len(specializationNames)):   # loop through the list of spec names
-                        if encounter[i].spec == specializationNames[x]: # if the name is present in the list
-                            nameExists = 1  # the name exists
-                    if nameExists == 0: # if the name doesnt exist
-                        specializationNames.append(encounter[i].spec)   # add the name
-
-                
-            try:    # gets rid of any blank entrys if there are any
-                specializationNames.remove('')
-            except: # continue on if there are none
-                pass
-                
-
-            if len(specializationNames) == 1:       # if only one spec name is present
-                modSpec = specializationNames[0][3:]   # the spec that is to be passed is equal to it
-                for i in range(len(encounter)):     # loop through all encounters
-                    encounter[i].spec = ''          # and remove the spec names. its redundant to only specify the same one each time
-            else:   # if there is more than one unique spec name
-                for i in range(len(specializationNames)):
-                    if i == 0:  # base case
-                        modSpec = specializationNames[i][3:]
-                    else:
-                        modSpec = modSpec + ' & ' + specializationNames[i][3:]
+                    modSpec = modSpec + ' & ' + specializationNames[i][3:]
       
         # unique case for bm hunters sicne they have that damn _
         if modSpec == 'BeastMastery': modSpec = 'Beast Mastery';
@@ -400,7 +381,7 @@ def summary():
             name5 = encounter[5].name, amount5 = encounter[5].rAmount, parse5 = encounter[5].rParse, spec5 = encounter[5].spec[:7], numRuns5 = encounter[5].numberOfFights, 
             name6 = encounter[6].name, amount6 = encounter[6].rAmount, parse6 = encounter[6].rParse, spec6 = encounter[6].spec[:7], numRuns6 = encounter[6].numberOfFights, 
             name7 = encounter[7].name, amount7 = encounter[7].rAmount, parse7 = encounter[7].rParse, spec7 = encounter[7].spec[:7], numRuns7 = encounter[7].numberOfFights, 
-            avgParse = avgPar, spec = modSpec, name = player, numRunsTotal = numRunsTotal)
+            avgParse = avgPar, spec = modSpec, name = player, numRunsTotal = numRunsTotal, specList = specList)
 
     elif request.method == 'POST':
         resp = make_response(render_template(loadingHtml))

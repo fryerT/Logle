@@ -237,14 +237,18 @@ function parseColor(parse, id) {
 // detects the number of specs and makes buttons based on specs found
 function specChoice() {
 	
-	if (specName.indexOf('&') > -1) {
+	specList = specList.replace(/&#39;| /g, '');
+	specList = specList.slice(1,-1);
+	specList = specList.split(',');
+	
+	if (specList.length > 1) {
 		specChoice = document.getElementById('specChoice');
 		spec0 = document.getElementById('specBtn0');
 		spec1 = document.getElementById('specBtn1');
 		spec2 = document.getElementById('specBtn2');
 		spec3 = document.getElementById('specBtn3');
 		
-		const specList = specName.split(' &amp; ');
+		//const specList = specName.split(' &amp; ');
 		
 		// there will always be a minimum of 2 specs if this triggers
 		spec0.value = specList[0];
@@ -255,16 +259,16 @@ function specChoice() {
 		specChoice.style.setProperty('height', '5.75vw');
 		
 		if (specList.length > 2) {
-			alert('1');
 			
 			spec2.value = specList[2];
 			spec2.style.setProperty('display', 'block');
 			specChoice.style.setProperty('height', '7.7vw');
-		}
-		if (specList.length > 3) {
-			spec3.value = specList[3];
-			spec2.style.setProperty('display', 'block');
-			specChoice.style.setProperty('height', '9.75vw');
+			
+			if (specList.length > 3) {
+				spec3.value = specList[3];
+				spec2.style.setProperty('display', 'block');
+				specChoice.style.setProperty('height', '9.75vw');
+			}
 		}
 		
 		specChoice.style.setProperty('display', 'block');
