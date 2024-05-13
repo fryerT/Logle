@@ -26,6 +26,7 @@ html {
 	font-family: var(--defaultFont);
 	cursor: default;
 	padding: 0vw;
+	caret-color: transparent;
 }
 
 
@@ -220,7 +221,7 @@ html {
 	}
 	.charText, .servText, .specText, .metricText, .keyLvlText, .rio { font-size: 2.25vw; }
 	.descriptionText {
-		font-size: 0.9vw;
+		font-size: 1vw;
 		border-top: 0.2vw solid var(--borderColor);
 		border-radius: 0;
 		padding: 0.5vw 1vw;
@@ -288,6 +289,7 @@ html {
 	font-family: inherit;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	caret-color: initial;
 }
 
 /* dropdown menu settings for the metric and minimum key level inputs */

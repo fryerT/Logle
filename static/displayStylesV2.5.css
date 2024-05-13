@@ -23,6 +23,8 @@ html {
 	background-color: var(--backgroundColorMain);
 	height: 95vh;
 	font-family: var(--defaultFont);
+	caret-color: transparent;
+	cursor: default;
 }
 
 
@@ -85,6 +87,7 @@ html {
 		left: 6vw;
 		grid-template-columns: 16vw;
 		font-size: 2.5vw;
+		display: none;
 	}
 	
 	.rtnBtn {
@@ -179,6 +182,7 @@ html {
 	}
 
 	.numOfRunsCont {
+		display: grid;
 		top: 8.5vw;
 		right: 2.65vw;
 		grid-template-columns: 8vw;
@@ -279,7 +283,6 @@ html {
 /* number of runs */
 .numOfRunsCont {
 	position: fixed;
-	display: grid;
 	background-color: var(--backgroundColorMain);
 	color: var(--textColor);
 	text-align: center;

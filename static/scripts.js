@@ -19,7 +19,7 @@ function isPhone() {
 }
 
 // remember the status of the checkbox using cookies
-function checkBoxStatus(id, theCheck) { if (theCheck == 'true') { document.getElementById(id).checked = 'true'; } }
+function checkBoxStatus(id, theCheck) { if (theCheck == 'true') { document.getElementById(id).checked = true; } }
 
 // highlights the text when the user selects a text input
 function selectTextListener(id) { document.getElementById(id).addEventListener('focus', () => document.getElementById(id).select()); }
@@ -95,7 +95,11 @@ function toggleRio() {
 		chara.style.setProperty('display', 'block');
 		
 		pasteRioCont.style.setProperty('display', 'none');
+		
+		document.getElementById('pasteRioToggle').checked = false;
 	}
+	
+	togglePasteRio();
 }
 
 // autorun on paste option 
@@ -240,6 +244,7 @@ function specChoice() {
 	specList = specList.replace(/&#39;| /g, '');
 	specList = specList.slice(1,-1);
 	specList = specList.split(',');
+	specList.sort();
 	
 	if (specList.length > 1) {
 		specChoice = document.getElementById('specChoice');
