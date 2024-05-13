@@ -1,6 +1,7 @@
 This program requires Python 3.11.8 or higher and pip 24.0 or higher.
 
 In order to use this program you need to go into your terminal and navigate to the directory you want the project inside. From here you can get the program running on Windows through typing these commands in this order:
+
 	1. git clone https://github.com/scriptis-png/Logle
 	2. cd Logle
 	3. pip install -r requirements.txt
