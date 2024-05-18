@@ -198,9 +198,10 @@ def home():
 
     if request.method == 'GET':
         # checks if cookies are stored, if not defaults and goes to homepage
-        userInfo = ast.literal_eval(request.cookies.get('userInfo'))
-        if userInfo is None:
-             userInfo = {
+        try:
+            userInfo = ast.literal_eval(request.cookies.get('userInfo'))
+        except:
+            userInfo = {
                 'name': '',
                 'server': '',
                 'spec': '',
@@ -369,7 +370,9 @@ def summary():
 
     elif request.method == 'POST':
         resp = make_response(render_template(loadingHtml))
-        resp.set_cookie('specName', request.form.get('newSpec'))
+        userInfo = ast.literal_eval(request.cookies.get('userInfo'))
+        userInfo['spec'] = request.form.get('newSpec')
+        resp.set_cookie('userInfo', str(userInfo))
         return resp
 
 @app.route('/error')
