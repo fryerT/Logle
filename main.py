@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, make_response, url_for, sessi
 import requests
 import json
 import threading
+import ast
 
 
 # information about the wcl client that is required for the program to work
@@ -197,74 +198,55 @@ def home():
 
     if request.method == 'GET':
         # checks if cookies are stored, if not defaults and goes to homepage
-        player = request.cookies.get('playerName')
-        if player is None:
-            player = ''
-
-        serv = request.cookies.get('serverName')
-        if serv is None:
-            serv = ''
-
-        spec = request.cookies.get('specName')
-        if spec is None:
-            spec = ''
-
-        metric = request.cookies.get('metricType')
-        if metric is None:
-            metric = 'DPS'
-
-        keyLevelCutoff = request.cookies.get('keyLevelCutoff')
-        if keyLevelCutoff is None:
-            keyLevelCutoff = 2
+        userInfo = ast.literal_eval(request.cookies.get('userInfo'))
+        if userInfo is None:
+             userInfo = {
+                'name': '',
+                'server': '',
+                'spec': '',
+                'metric': 'DPS',
+                'keyLvlCO': '2',
+                'rio': '',
+                'specTog': 'false',
+                'rioTog': 'false',
+                'pasteRioTog': 'false'
+            }
         
-        rioInput = request.cookies.get('rio')
-        if rioInput is None:
-            rioInput = ''
-
-        specToggle = request.cookies.get('specToggle')
-        if specToggle is None:
-            specToggle = 'false'
-        
-        rioToggle = request.cookies.get('rioToggle')
-        if rioToggle is None:
-            rioToggle = 'false'
-
-        pasteRioToggle = request.cookies.get('pasteRioToggle')
-        if pasteRioToggle is None:
-            pasteRioToggle = 'false'
-
-
-        return render_template(mainHtml, charName = player, servName = serv, specName = spec, metric = metric, keyLvlCo = keyLevelCutoff,
-                                   specTog = specToggle, rioInput = rioInput, rioTog = rioToggle, pasteRioTog = pasteRioToggle)
+        return render_template(mainHtml, charName = userInfo['name'], servName = userInfo['server'], specName = userInfo['spec'], metric = userInfo['metric'],
+            keyLvlCo = userInfo['keyLvlCO'], specTog = userInfo['specTog'], rioInput = userInfo['rio'], rioTog = userInfo['rioTog'],
+            pasteRioTog = userInfo['pasteRioTog'])
 
     elif request.method == 'POST':
         # create response and set cookies based on user input
         resp = make_response(render_template(loadingHtml))
         
-        resp.set_cookie('playerName', request.form.get('charName').replace(' ', ''))
-        resp.set_cookie('serverName', request.form.get('servName').replace(' ', ''))
-        resp.set_cookie('specName', request.form.get('specName').replace(' ', ''))
-        resp.set_cookie('metricType', request.form.get('metricSelected'))
-        resp.set_cookie('keyLevelCutoff', request.form.get('minKeyLvlSelected'))
-        resp.set_cookie('rio', request.form.get('rioInput').replace(' ', ''))
-        
         if request.form.get('specToggle') == 'on':
             specTogStatus = 'true'
         else:
             specTogStatus = 'false'
-        resp.set_cookie('specToggle', specTogStatus)
         
         if request.form.get('rioToggle') == 'on':
             rioTogStatus = 'true'
         else:
             rioTogStatus = 'false'
-        resp.set_cookie('rioToggle', rioTogStatus)
         
         if request.form.get('pasteRioToggle') == 'on':
             pasteRioTogStatus = 'true'
         else:
             pasteRioTogStatus = 'false'
-        resp.set_cookie('pasteRioToggle', pasteRioTogStatus)
+        
+        userInfo = {
+            'name': request.form.get('charName').replace(' ', ''),
+            'server': request.form.get('servName').replace(' ', ''),
+            'spec': request.form.get('specName').replace(' ', ''),
+            'metric': request.form.get('metricSelected'),
+            'keyLvlCO': request.form.get('minKeyLvlSelected'),
+            'rio': request.form.get('rioInput').replace(' ', ''),
+            'specTog': specTogStatus,
+            'rioTog': rioTogStatus,
+            'pasteRioTog': pasteRioTogStatus
+        }
+        resp.set_cookie('userInfo', str(userInfo))
         
         return resp
 
@@ -277,12 +259,14 @@ def loading():
 def summary():
     if request.method == 'GET':
         # retrieve info from cookies
-        player = request.cookies.get('playerName')
-        serv = request.cookies.get('serverName')
-        spec = request.cookies.get('specName')
-        metric = request.cookies.get('metricType')
-        keyLevelCutoff = request.cookies.get('keyLevelCutoff')
-        rio = request.cookies.get('rio')
+        userInfo = ast.literal_eval(request.cookies.get('userInfo'))
+        player = userInfo['name']
+        serv = userInfo['server']
+        spec = userInfo['spec']
+        metric = userInfo['metric']
+        keyLevelCutoff = userInfo['keyLvlCO']
+        rio = userInfo['rio']
+        
         if rio != '':
             try:
                 xSplit = rio.split('/')
