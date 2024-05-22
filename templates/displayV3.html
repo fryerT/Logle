@@ -140,9 +140,8 @@
 		<b>Total: {{numRunsTotal}}</b>
 	</div>
 	
-	
 	<!-- if more than one spec is detected, this gives the option to filter to a specific one -->
-	<form action = '{{url_for("summary")}}' method = 'POST' id = 'specForm'>
+	<form action = '{{url_for("loading")}}' method = 'SC' id = 'specForm'>
 		<div class = 'specChoice' id = 'specChoice'> Specs
 			<input type = 'submit' class = 'specChoiceBtn' id = 'specBtn0' style = 'grid-area: spec0;' onclick = 'setSpecChoice("specBtn0");'></input>
 				
@@ -156,5 +155,15 @@
 		</div>
 		<script>specChoice();</script>
 	</form>
+	
+	<!-- displays the key level and metric the user chose 
+	<div class = 'optionsChosen'>
+		<img class = 'keyImage'></img>
+		<img class = 'twoImage'></img>
+		<img class = 'dpsImage'></img>
+		<img class = 'hpsImage'></img>
+		<img class = 'dpsText'></img>
+	</div>
+	-->
 	
 </html>

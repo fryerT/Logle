@@ -16,6 +16,11 @@
 	--encImage5: url(images/AV.png);
 	--encImage6: url(images/NO.png);
 	--encImage7: url(images/Uld.png);
+	
+	--keyImage: url(images/hourglass.png);
+	--dpsImage: url(images/dagger.png);
+	--dpsText: url(images/dpsText.png);
+	--2image: url(images/2.png);
 }
 
 /* global */
@@ -332,3 +337,42 @@ html {
 .bannerLeft { grid-area: banL; }
 .bannerRight { grid-area: banR; }
 .encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 { grid-area: img; }
+
+
+
+/*********************************************************/
+.optionsChosen {
+	display: grid;
+	grid-template-areas:
+		'key level'
+		'metric metricTxt';
+	grid-template-rows: auto;
+	grid-template-columns: auto;
+	position: fixed;
+	top: 0.5vw;
+	left: 13vw;
+}
+.keyImage {
+	content: var(--keyImage);
+	height: 3vw;
+	width: auto;
+	grid-area: key;
+}
+.twoImage {
+	content: var(--2image);
+	height: 3vw;
+	width: auto;
+	grid-area: level;
+}
+.dpsImage {
+	content: var(--dpsImage);
+	height: 3vw;
+	width: auto;
+	grid-area: metric;
+}
+.dpsText {
+	content: var(--dpsText);
+	height: 3vw;
+	width: auto;
+	grid-area: metricTxt;
+}

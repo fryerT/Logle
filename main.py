@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, make_response, url_for, session
+from flask import Flask, render_template, request, make_response, url_for, session, redirect
+from markupsafe import escape
 import requests
 import json
 import threading
@@ -65,10 +66,18 @@ def getPlayerPerformanceFromEncounter(playerName, authToken, boss_ID, spec_Name,
                 }"""
     return apiCall(query, vars, authToken)
 
+
+
+
 # function that runs the program, triggered by a button
-def RunLogle(encounter, specList, playerName, serverName, specName, metricType, keyLevelCutoff, authToken, i):
+def RunLogle(encounter, specList, queryData, authToken, i):
     
-    global avgPar
+    # playerName, serverName, specName, metricType, keyLevelCutoff, 
+    playerName = queryData['player']
+    serverName = queryData['serv']
+    specName = queryData['spec']
+    metricType = queryData['metric']
+    keyLevelCutoff = queryData['keyLevelCutoff']
     
 	# grabs all fights for the player based on encounter id
     logs = getPlayerPerformanceFromEncounter(playerName, authToken, encounter[i].id, specName, serverName, metricType.lower())
@@ -79,7 +88,7 @@ def RunLogle(encounter, specList, playerName, serverName, specName, metricType, 
         allFights = logs["data"]["characterData"]["character"]["encounterRankings"]["ranks"]
 	# if the information is incorrect, exit the function and do not continue
     except:
-        avgPar = "Error"
+        queryData['avgPar'] = "Error"
         return 0
     
     # iterates through all the fights of the selected encounter to analyze amount/parse
@@ -120,9 +129,45 @@ def RunLogle(encounter, specList, playerName, serverName, specName, metricType, 
         encounter[i].rAmount = "{:,.0f}".format(round(float(encounter[i].amount), 0))
         encounter[i].rParse = "{:.0f}".format(round(float(encounter[i].parse), 0))
 
+    return 0
 
-def avgParse(encounter):
-    global avgPar  
+
+def ThreadLogle(encounter, specList, characterData, authToken):
+    # assigns each dungeon encounter to a thread
+    t0 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 0,))
+    t1 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 1,))
+    t2 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 2,))
+    t3 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 3,))
+    t4 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 4,))
+    t5 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 5,))
+    t6 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 6,))
+    t7 = threading.Thread(target = RunLogle, args = (encounter, specList, characterData, authToken, 7,))
+    
+    # start em up
+    t0.start()
+    t1.start()
+    t2.start()
+    t3.start()
+    t4.start()
+    t5.start()
+    t6.start()
+    t7.start()
+    
+    # wow, so fast
+    t0.join()
+    t1.join()
+    t2.join()
+    t3.join()
+    t4.join()
+    t5.join()
+    t6.join()
+    t7.join()
+    
+    return 0
+
+
+
+def avgParse(encounter, queryData):  
     
     # calculates average parse and updates information
     avg = 0
@@ -138,14 +183,13 @@ def avgParse(encounter):
     # after we know how many encounters with logs exist
     if numOfEnc != 0:   # if any logs exist divide the total by the amount of encounters with logs
             avg /= numOfEnc
-            avgPar = "{:.0f}".format(avg)
+            queryData['avgPar'] = "{:.0f}".format(avg)
     if numOfEnc == 0:   # if no logs exist, reflect that in avgPar
-            avgPar = "None"
+            queryData['avgPar'] = "None"
 
+    return 0
 
-
-
-
+'''
 # to be scrapped if it can't be optimized further
 def reportInfo(reportId, fightId, sourceId, authToken):
     vars = {'reportId': reportId, 'fightId': fightId, 'sourceId': sourceId}
@@ -189,6 +233,11 @@ def getCharacterId(characterName, specName, reportId, fightId, authToken):
             return character["id"]
     # if the character could not be found in the log
     return "Character ID not found..."
+'''
+
+
+
+
 
 
 app = Flask(__name__)
@@ -210,8 +259,7 @@ def home():
                 'rio': '',
                 'specTog': 'false',
                 'rioTog': 'false',
-                'pasteRioTog': 'false'
-            }
+                'pasteRioTog': 'false' }
         
         return render_template(mainHtml, charName = userInfo['name'], servName = userInfo['server'], specName = userInfo['spec'], metric = userInfo['metric'],
             keyLvlCo = userInfo['keyLvlCO'], specTog = userInfo['specTog'], rioInput = userInfo['rio'], rioTog = userInfo['rioTog'],
@@ -221,20 +269,14 @@ def home():
         # create response and set cookies based on user input
         resp = make_response(render_template(loadingHtml))
         
-        if request.form.get('specToggle') == 'on':
-            specTogStatus = 'true'
-        else:
-            specTogStatus = 'false'
+        if request.form.get('specToggle') == 'on': specTogStatus = 'true';
+        else: specTogStatus = 'false';
         
-        if request.form.get('rioToggle') == 'on':
-            rioTogStatus = 'true'
-        else:
-            rioTogStatus = 'false'
+        if request.form.get('rioToggle') == 'on': rioTogStatus = 'true';
+        else: rioTogStatus = 'false';
         
-        if request.form.get('pasteRioToggle') == 'on':
-            pasteRioTogStatus = 'true'
-        else:
-            pasteRioTogStatus = 'false'
+        if request.form.get('pasteRioToggle') == 'on': pasteRioTogStatus = 'true';
+        else: pasteRioTogStatus = 'false';
         
         userInfo = {
             'name': request.form.get('charName').replace(' ', ''),
@@ -245,141 +287,108 @@ def home():
             'rio': request.form.get('rioInput').replace(' ', ''),
             'specTog': specTogStatus,
             'rioTog': rioTogStatus,
-            'pasteRioTog': pasteRioTogStatus
-        }
+            'pasteRioTog': pasteRioTogStatus }
+        
         resp.set_cookie('userInfo', str(userInfo))
         
         return resp
 
 # currently only used for the specChoice option on the summary page
-@app.route('/loading')
+@app.route('/loading', methods = ['GET', 'POST', 'SC'])
 def loading():
-    return render_template(loadingHtml)
 
-@app.route('/summary', methods = ['GET', 'POST'])
-def summary():
-    if request.method == 'GET':
+    if request.method == 'GET': return render_template(loadingHtml);
+    
+    elif request.method == 'POST':
         # retrieve info from cookies
         userInfo = ast.literal_eval(request.cookies.get('userInfo'))
-        player = userInfo['name']
-        serv = userInfo['server']
-        spec = userInfo['spec']
-        metric = userInfo['metric']
-        keyLevelCutoff = userInfo['keyLvlCO']
-        rio = userInfo['rio']
+       
+        if userInfo['spec'] == '': userInfo['spec'] = '_';
         
-        if rio != '':
+        if userInfo['rio'] != '':
             try:
                 xSplit = rio.split('/')
                 ySplit = xSplit[6].split('?')
-                player = ySplit[0]
-                serv = xSplit[5]
-            except:
-                return render_template(errorHtml)
-
-        global avgPar
-        avgPar = ''
-        specList = []
+                userInfo['name'] = ySplit[0]
+                userInfo['server'] = xSplit[5]
+            except: return error();
         
-        authToken = getNewToken()
+        return redirect(userInfo['name'] + '/' + userInfo['server'] + '/' + userInfo['spec'] + '/' + userInfo['metric'] + '/' + userInfo['keyLvlCO'])
         
-        if authToken == 'Status Code 200':
-            return render_template(errorHtml)
-        
-        # inilialize encounter class objects
-        encounter = []
-        for i in range(len(encounterName)):
-            encounter.append(Encounter(encounterName[i], encounterId[i]))
-
-        # assigns each dungeon encounter to a thread
-        t0 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 0,))
-        t1 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 1,))
-        t2 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 2,))
-        t3 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 3,))
-        t4 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 4,))
-        t5 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 5,))
-        t6 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 6,))
-        t7 = threading.Thread(target = RunLogle, args = (encounter, specList, player, serv, spec, metric, keyLevelCutoff, authToken, 7,))
-        
-        # start em up
-        t0.start()
-        t1.start()
-        t2.start()
-        t3.start()
-        t4.start()
-        t5.start()
-        t6.start()
-        t7.start()
-        
-        # wow, so fast
-        t0.join()
-        t1.join()
-        t2.join()
-        t3.join()
-        t4.join()
-        t5.join()
-        t6.join()
-        t7.join()
-        
-        # if there was an error with the query, go to the error page
-        if avgPar == 'Error':
-            return error()
-
-        avgParse(encounter)
-        specList = list(dict.fromkeys(specList))
-        # used in case the specName isn't specified by user so it doesn't mess up the input on main['get']
-        modSpec = spec
-
-
-        # only do this if specialization was not specified
-        if spec == '':
-            specializationNames = []    # create a list to store spec names that have a top parse
-            for i in range(len(encounter)):     # loop through each encounter
-                if encounter[i].spec != '':
-                    specializationNames.append(encounter[i].spec)   # add spec names to the list
-            specializationNames = list(dict.fromkeys(specializationNames)) # remove any duplicates
-            
-            for i in range(len(specializationNames)):
-                if i == 0:  # base case
-                    modSpec = specializationNames[i][3:]
-                    if len(specializationNames) == 1:   # if there is only one spec, listing these would be repetitive
-                        for i in range(len(encounter)):
-                            encounter[i].spec = ''
-                else:
-                    modSpec = modSpec + ' & ' + specializationNames[i][3:]
-      
-        # unique case for bm hunters sicne they have that damn _
-        if modSpec == 'BeastMastery': modSpec = 'Beast Mastery';
-        
-        # calculates the total number of logs parsed by the program
-        numRunsTotal = 0
-        for i in range(len(encounter)):
-            numRunsTotal += encounter[i].numberOfFights
-        
-        # return webpage with updated values
-        return render_template(displayHtml, 
-            name0 = encounter[0].name, amount0 = encounter[0].rAmount, parse0 = encounter[0].rParse, spec0 = encounter[0].spec[:7], numRuns0 = encounter[0].numberOfFights,
-            name1 = encounter[1].name, amount1 = encounter[1].rAmount, parse1 = encounter[1].rParse, spec1 = encounter[1].spec[:7], numRuns1 = encounter[1].numberOfFights,
-            name2 = encounter[2].name, amount2 = encounter[2].rAmount, parse2 = encounter[2].rParse, spec2 = encounter[2].spec[:7], numRuns2 = encounter[2].numberOfFights, 
-            name3 = encounter[3].name, amount3 = encounter[3].rAmount, parse3 = encounter[3].rParse, spec3 = encounter[3].spec[:7], numRuns3 = encounter[3].numberOfFights, 
-            name4 = encounter[4].name, amount4 = encounter[4].rAmount, parse4 = encounter[4].rParse, spec4 = encounter[4].spec[:7], numRuns4 = encounter[4].numberOfFights, 
-            name5 = encounter[5].name, amount5 = encounter[5].rAmount, parse5 = encounter[5].rParse, spec5 = encounter[5].spec[:7], numRuns5 = encounter[5].numberOfFights, 
-            name6 = encounter[6].name, amount6 = encounter[6].rAmount, parse6 = encounter[6].rParse, spec6 = encounter[6].spec[:7], numRuns6 = encounter[6].numberOfFights, 
-            name7 = encounter[7].name, amount7 = encounter[7].rAmount, parse7 = encounter[7].rParse, spec7 = encounter[7].spec[:7], numRuns7 = encounter[7].numberOfFights, 
-            avgParse = avgPar, spec = modSpec, name = player, numRunsTotal = numRunsTotal, specList = specList)
-
-    elif request.method == 'POST':
+    elif request.method == 'SC':
         resp = make_response(render_template(loadingHtml))
         userInfo = ast.literal_eval(request.cookies.get('userInfo'))
         userInfo['spec'] = request.form.get('newSpec')
         resp.set_cookie('userInfo', str(userInfo))
         return resp
+    
 
 @app.route('/error')
-def error():
-    return render_template(errorHtml)
+def error(): return render_template(errorHtml);
 
-   
+@app.route("/<name>/<server>/<specName>/<metricType>/<keyLevelCO>", methods = ['GET', 'POST'])
+def summaryLink(name, server, specName, metricType, keyLevelCO):
+
+    authToken = getNewToken()
+    if authToken == 'Status Code 200': return error();
+
+    if specName == '_': specName = '';
+    
+    # retrieve info from cookies
+    characterData = { 'player': name, 'serv': server, 'spec': specName, 'metric': metricType, 'keyLevelCutoff': keyLevelCO, 'avgPar': '' }
+    
+    specList = []
+    
+    # inilialize encounter class objects
+    encounter = []
+    for i in range(len(encounterName)): encounter.append(Encounter(encounterName[i], encounterId[i]));
+
+    ThreadLogle(encounter, specList, characterData, authToken)
+    
+    # if there was an error with the query, go to the error page
+    if characterData['avgPar'] == 'Error': return error();
+
+    avgParse(encounter, characterData)
+    specList = list(dict.fromkeys(specList))
+    
+    # used in case the specName isn't specified by user so it doesn't mess up the input on main['get']
+
+
+    # only do this if specialization was not specified
+    if characterData['spec'] == '':
+        specializationNames = []    # create a list to store spec names that have a top parse
+        for i in range(len(encounter)):     # loop through each encounter
+            if encounter[i].spec != '':
+                specializationNames.append(encounter[i].spec)   # add spec names to the list
+        specializationNames = list(dict.fromkeys(specializationNames)) # remove any duplicates
+        
+        for i in range(len(specializationNames)):
+            if i == 0:  # base case
+                characterData['spec'] = specializationNames[i][3:]
+                if len(specializationNames) == 1:   # if there is only one spec, listing these would be repetitive
+                    for i in range(len(encounter)): encounter[i].spec = '';
+            else:
+                characterData['spec'] = characterData['spec'] + ' & ' + specializationNames[i][3:]
+  
+    # unique case for bm hunters sicne they have that damn _
+    if characterData['spec'] == 'BeastMastery': characterData['spec'] = 'Beast Mastery';
+    
+    # calculates the total number of logs parsed by the program
+    numRunsTotal = 0
+    for i in range(len(encounter)): numRunsTotal += encounter[i].numberOfFights;
+    
+    # return webpage with updated values
+    return render_template(displayHtml, 
+        name0 = encounter[0].name, amount0 = encounter[0].rAmount, parse0 = encounter[0].rParse, spec0 = encounter[0].spec[:7], numRuns0 = encounter[0].numberOfFights,
+        name1 = encounter[1].name, amount1 = encounter[1].rAmount, parse1 = encounter[1].rParse, spec1 = encounter[1].spec[:7], numRuns1 = encounter[1].numberOfFights,
+        name2 = encounter[2].name, amount2 = encounter[2].rAmount, parse2 = encounter[2].rParse, spec2 = encounter[2].spec[:7], numRuns2 = encounter[2].numberOfFights, 
+        name3 = encounter[3].name, amount3 = encounter[3].rAmount, parse3 = encounter[3].rParse, spec3 = encounter[3].spec[:7], numRuns3 = encounter[3].numberOfFights, 
+        name4 = encounter[4].name, amount4 = encounter[4].rAmount, parse4 = encounter[4].rParse, spec4 = encounter[4].spec[:7], numRuns4 = encounter[4].numberOfFights, 
+        name5 = encounter[5].name, amount5 = encounter[5].rAmount, parse5 = encounter[5].rParse, spec5 = encounter[5].spec[:7], numRuns5 = encounter[5].numberOfFights, 
+        name6 = encounter[6].name, amount6 = encounter[6].rAmount, parse6 = encounter[6].rParse, spec6 = encounter[6].spec[:7], numRuns6 = encounter[6].numberOfFights, 
+        name7 = encounter[7].name, amount7 = encounter[7].rAmount, parse7 = encounter[7].rParse, spec7 = encounter[7].spec[:7], numRuns7 = encounter[7].numberOfFights, 
+        avgParse = characterData['avgPar'], spec = characterData['spec'], name = characterData['player'], numRunsTotal = numRunsTotal, specList = specList)
+
 
 if __name__ == '__main__':
 	app.run()
