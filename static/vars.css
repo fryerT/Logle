@@ -1,0 +1,50 @@
+/* variables */
+:root {
+	/* universal */
+	--backgroundColorMain: #362c36;
+	--textColor: #f7f6f0;
+	--borderColor: 	#a7cbd5;
+	--backgroundColorSecondary: #4d4c59;
+	--backgroundColorHover: #71777d;
+	--defaultFont: monospace;
+	--bannerImage: url(images/back.png);
+	/***********/
+
+
+	/* main */
+	--logoImage: url(images/logleLogoSmall.png);
+	
+	--togTogCheckedImage: url(images/xSmall.png);
+	--togTogUncheckedImage: url(images/gearSmall.png);
+	--togTogCheckedHoverImage: url(images/xHoverSmall.png);
+	--togTogUncheckedHoverImage: url(images/gearHoverSmall.png);
+	--checkedImage: url(images/checkedSmall.png);
+	--uncheckedImage: url(images/uncheckedSmall.png);
+	--checkedHoverImage: url(images/checkedHoverSmall.png);
+	--uncheckedHoverImage: url(images/uncheckedHoverSmall.png);
+	/***********/
+
+
+	/* display */
+	--encImage0: url(images/AA.png);
+	--encImage1: url(images/BH.png);
+	--encImage2: url(images/HoI.png);
+	--encImage3: url(images/Nel.png);
+	--encImage4: url(images/RLP.png);
+	--encImage5: url(images/AV.png);
+	--encImage6: url(images/NO.png);
+	--encImage7: url(images/Uld.png);
+	/***********/
+
+
+	/* loading */
+	--loaderBorderColor: #a7cbd5; 
+	--loaderTopBorderColor: #f7f6f0;
+	/***********/
+
+
+	/* error */
+	--errorColor: #ff0000;
+	--errorBannerImage: url(images/bannerError.png);
+	/***********/
+}

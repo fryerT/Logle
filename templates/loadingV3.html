@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block stylesheet %}
+	<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'loadingStylesV3.css')}}">
+{% endblock %}
+
+{% block javascript %}
+	<script>
+		window.onload = function() { submit('myForm'); };
+	</script>
+{% endblock %}
+
+{% block form %}
+	<form action = '{{url_for("loading")}}' method = 'POST' id = "myForm"></form>
+{% endblock %}
+
+{% block title %}
+	Loading...
+{% endblock %}
+
+{% block content %}
+	<!-- loading text -->
+	<div class = 'loadingText'>
+		<!-- insert the text to be displayed during loading here... -->
+	</div>
+
+	<!-- loading circle so the user knows we're doing something -->
+	<div class = 'loadingCircle' id = 'loader'></div>
+
+	<!-- invisible button used to jankily autosubmit form so we can store and retrieve updated cookies -->
+	<input type = 'submit' style = 'display: none; grid-area: invis;'></input>
+{% endblock %}

@@ -1,28 +1,3 @@
-/* variables */
-:root {
-	--backgroundColorMain: #362c36;
-	--textColor: #f7f6f0;
-	--borderColor: 	#a7cbd5;
-	--backgroundColorSecondary: #4d4c59;
-	--backgroundColorHover: #71777d;
-	--defaultFont: monospace;
-	
-	--bannerImage: url(images/banner.png);
-	--encImage0: url(images/AA.png);
-	--encImage1: url(images/BH.png);
-	--encImage2: url(images/HoI.png);
-	--encImage3: url(images/Nel.png);
-	--encImage4: url(images/RLP.png);
-	--encImage5: url(images/AV.png);
-	--encImage6: url(images/NO.png);
-	--encImage7: url(images/Uld.png);
-	
-	--keyImage: url(images/hourglass.png);
-	--dpsImage: url(images/dagger.png);
-	--dpsText: url(images/dpsText.png);
-	--2image: url(images/2.png);
-}
-
 /* global */
 html {
 	background-color: var(--backgroundColorMain);
@@ -30,93 +5,6 @@ html {
 	font-family: var(--defaultFont);
 	caret-color: transparent;
 	cursor: default;
-}
-
-
-/* phone settings */
-@media (max-width: 450px) {
-	.wrapper {
-		grid-template-areas: 'contWrap''invis';
-		grid-template-rows: repeat(2, 500vw);
-		grid-template-columns: 1fr;
-		grid-gap: 0vw;
-		top: 2vw;
-		left: 2vw;
-		right: 2vw;
-	}
-
-	.contWrapper {
-		grid-template-areas: 'avg' 'enc0' 'enc1' 'enc2' 'enc3' 'enc4' 'enc5' 'enc6' 'enc7' 'btn';
-		grid-template-columns: 1fr;
-		grid-template-rows:  15vw repeat(8, 10vw) 10vw;
-		grid-gap: 4vw;
-		margin: 0 2vw;
-	}
-	
-	.encWrapper {
-		grid-template-areas:
-			'img name parse'
-			'img amount parse';
-		grid-template-columns: 1fr 4fr 1fr;
-		grid-template-rows: 0.5fr 1fr;
-		border-radius: 1vw;
-		height: auto;
-	}
-	.encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 {
-		height: 9vw;
-		width: 9vw;
-		margin: 0.6vw;
-	}
-
-	.specChoice {
-		grid-template-rows: repeat(4, 5vw);
-		
-		background: none;
-		top: 131vw;
-		right: 1.5vw;
-		border: none;
-		border-radius: 1.25vw;
-		height: 24.375vw;
-		width: 25vw;
-		
-		font-size: 3.75vw;
-	}
-	.specChoiceBtn {
-		border: 0.25vw solid var(--borderColor);
-		height: 5vw;
-		font-size: 2.5vw;
-	}
-	
-	.numOfRunsCont {
-		top: 131vw;
-		left: 6vw;
-		grid-template-columns: 16vw;
-		font-size: 2.5vw;
-		display: none;
-	}
-	
-	.rtnBtn {
-		height: 8vw;
-		width: 40vw;
-		border-radius: 1vw;
-		border: 0.6vw solid var(--borderColor);
-		line-height: 4vw;
-		font-size: 4vw;
-	}
-
-	.tempBtn {
-		border-radius: 0vw;
-		border-bottom: 0.4vw solid var(--borderColor);
-		height: 16vw;
-	}	
-	
-	.playerName, .dungeon, .parse, .avgParse { font-size: 4.5vw; }
-	.amount { font-size: 4vw; line-height: auto; }
-	.parse { line-height: 10vw;}
-
-	.rtnBtn:hover, .specChoiceBtn:hover { box-shadow: 0 1vw 2vw 0 rgba(0,0,0,0.2), 0 0.75vw 2.5vw 0 rgba(0,0,0,0.19); }
-	
-	.bannerLeft, .bannerRight { display: none; }
 }
 
 /* every other view */
@@ -321,12 +209,7 @@ html {
 /* banner settings */
 .bannerLeft, .bannerRight { background-size: fit; background: var(--bannerImage); margin: 0; }
 
-/* focus and hover settings for anything the user can interact with */
-.rtnBtn:focus, .specChoiceBtn:focus {
-	outline: none;
-	border-color: var(--textColor);
-}
-.rtnBtn:hover, .specChoiceBtn:hover { background-color: var(--backgroundColorHover); }
+
 
 /* assigns grid-areas */
 .playerName, .dungeon, .parse, .avgParse { font-weight: bold; text-align: center; }
@@ -340,39 +223,234 @@ html {
 
 
 
-/*********************************************************/
-.optionsChosen {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/****************************************************************************************/
+.queryOptionsGrid {
 	display: grid;
 	grid-template-areas:
-		'key level'
-		'metric metricTxt';
-	grid-template-rows: auto;
-	grid-template-columns: auto;
+		'metricOption metricOption metricOption'
+		'keyLvlOption keyLvlOption keyLvlOption'
+		'keyLvlOption keyLvlOption keyLvlOption'
+		'keyLvlOption keyLvlOption keyLvlOption';
+	grid-template-columns: repeat(3, 1fr);
+	
 	position: fixed;
-	top: 0.5vw;
-	left: 13vw;
+	top: 8.5vw;
+	left: 1.25vw;
+	
+	width: 10vw;
+	height: 10vw;
+	border-radius: 0.5vw;
+	border: 0.2vw solid var(--borderColor);
+	
+	background-color: var(--backgroundColorMain);
 }
-.keyImage {
-	content: var(--keyImage);
-	height: 3vw;
-	width: auto;
-	grid-area: key;
+
+.metricOptionsGrid {
+	display: grid;
+	grid-template-areas:
+		'hpsOption dpsOption';
+	grid-area: metricOption;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: auto;
+	height: 100%;
+	width: 100%;
 }
-.twoImage {
-	content: var(--2image);
-	height: 3vw;
-	width: auto;
-	grid-area: level;
+
+.keyLvlOptionsGrid {
+	display: grid;
+	grid-template-areas:
+		'kl1 kl2 kl3'
+		'kl4 kl5 kl6'
+		'kl7 kl8 kl9';
+	grid-area: keyLvlOption;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto;
+
+	height: 100%;
+	width: 100%;
 }
-.dpsImage {
-	content: var(--dpsImage);
-	height: 3vw;
-	width: auto;
-	grid-area: metric;
+
+.metricButton {
+	cursor: pointer;
+	padding: 0vw;
+	margin: 0.2vw;
+	background-color: var(--backgroundColorSecondary);
+	
+	font-family: inherit;
+	font-size: 1vw;
+	font-weight: bold;
+	color: var(--textColor);
+	text-align: center;
+	
+	border-radius: 0.5vw;
+	border: 0.1vw solid var(--borderColor);
 }
-.dpsText {
-	content: var(--dpsText);
-	height: 3vw;
-	width: auto;
-	grid-area: metricTxt;
+
+.keyLvlButton {
+	cursor: pointer;
+	padding: 0vw;
+	margin: 0.2vw;
+	background-color: var(--backgroundColorSecondary);
+	
+	font-family: inherit;
+	font-size: 1vw;
+	font-weight: bold;
+	color: var(--textColor);
+	text-align: center;
+	
+	border-radius: 0.5vw;
+	border: 0.1vw solid var(--borderColor);
+}
+
+
+
+
+
+/* focus and hover settings for anything the user can interact with */
+.rtnBtn:focus, .specChoiceBtn:focus, .keyLvlButton:focus, .metricButton:focus {
+	outline: none;
+	border-color: var(--textColor);
+}
+.rtnBtn:hover, .specChoiceBtn:hover, .keyLvlButton:hover, .metricButton:hover { background-color: var(--backgroundColorHover); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* phone settings */
+@media (max-width: 450px) {
+	.wrapper {
+		grid-template-areas: 'contWrap''invis';
+		grid-template-rows: repeat(2, 500vw);
+		grid-template-columns: 1fr;
+		grid-gap: 0vw;
+		top: 2vw;
+		left: 2vw;
+		right: 2vw;
+	}
+
+	.contWrapper {
+		grid-template-areas: 'avg' 'enc0' 'enc1' 'enc2' 'enc3' 'enc4' 'enc5' 'enc6' 'enc7' 'btn';
+		grid-template-columns: 1fr;
+		grid-template-rows:  15vw repeat(8, 10vw) 10vw;
+		grid-gap: 4vw;
+		margin: 0 2vw;
+	}
+	
+	.encWrapper {
+		grid-template-areas:
+			'img name parse'
+			'img amount parse';
+		grid-template-columns: 1fr 4fr 1fr;
+		grid-template-rows: 0.5fr 1fr;
+		border-radius: 1vw;
+		height: auto;
+	}
+	.encImage0, .encImage1, .encImage2, .encImage3, .encImage4, .encImage5, .encImage6, .encImage7 {
+		height: 9vw;
+		width: 9vw;
+		margin: 0.6vw;
+	}
+
+	.specChoice {
+		grid-template-rows: repeat(4, 5vw);
+		
+		background: none;
+		top: 131vw;
+		right: 1.5vw;
+		border: none;
+		border-radius: 1.25vw;
+		height: 24.375vw;
+		width: 25vw;
+		
+		font-size: 3.75vw;
+	}
+	.specChoiceBtn {
+		border: 0.25vw solid var(--borderColor);
+		height: 5vw;
+		font-size: 2.5vw;
+	}
+	
+	.numOfRunsCont {
+		top: 131vw;
+		left: 6vw;
+		grid-template-columns: 16vw;
+		font-size: 2.5vw;
+		display: none;
+	}
+	
+	.rtnBtn {
+		height: 8vw;
+		width: 40vw;
+		border-radius: 1vw;
+		border: 0.6vw solid var(--borderColor);
+		line-height: 4vw;
+		font-size: 4vw;
+	}
+
+	.tempBtn {
+		border-radius: 0vw;
+		border-bottom: 0.4vw solid var(--borderColor);
+		height: 16vw;
+	}	
+	
+	.playerName, .dungeon, .parse, .avgParse { font-size: 4.5vw; }
+	.amount { font-size: 4vw; line-height: auto; }
+	.parse { line-height: 10vw;}
+
+	.rtnBtn:hover, .specChoiceBtn:hover { box-shadow: 0 1vw 2vw 0 rgba(0,0,0,0.2), 0 0.75vw 2.5vw 0 rgba(0,0,0,0.19); }
+	
+	.bannerLeft, .bannerRight { display: none; }
+	
+	
+	
+	.queryOptionsGrid {
+		top: 131vw;
+		left: 1.25vw;
+		
+		width: 25vw;
+		height: 25vw;
+		border-radius: 1.25vw;
+		border: 0.5vw solid var(--borderColor);
+		
+		background-color: var(--backgroundColorMain);
+	}
+	.metricButton, .keyLvlButton {
+		margin: 0.5vw;
+		font-size: 2.5vw;
+		border-radius: 1.25vw;
+		border: 0.25vw solid var(--borderColor);
+	}
 }

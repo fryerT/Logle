@@ -109,15 +109,18 @@ function togglePasteRio() {
 	togPasteBox = document.getElementById('pasteRioToggle');
 	rioInput = document.getElementById('rioInput');
 	submitForm = document.getElementById('submitForm');
+	runBtn = document.getElementById('runBtn');
 	
 	if (togPasteBox.checked) { 
-		rioInput.addEventListener('paste', onPaste); 
-		submitForm.target = '_blank';
+		rioInput.addEventListener('paste', onPaste);
+		runBtn.style.setProperty('display', 'none');
+		//submitForm.target = '_blank';
 	}
 	
 	else { 
 		rioInput.removeEventListener('paste', onPaste); 
-		submitForm.target = '';
+		runBtn.style.setProperty('display', 'block');
+		//submitForm.target = '';
 	}
 
 }
@@ -237,7 +240,6 @@ function parseColor(parse, id) {
 	}
 }
 
-
 // detects the number of specs and makes buttons based on specs found
 function specChoice() {
 	
@@ -282,11 +284,53 @@ function specChoice() {
 }
 
 // sets the spec to be queried based on the button pressed
-function setSpecChoice(id) {
-	specClicked = document.getElementById(id);
-	newSpec = document.getElementById('newSpec');
-	
-	newSpec.value = specClicked.value;
-	
-	submit('specForm');
+function setAndSubmit(itemId, formId, textBoxId) {
+	document.getElementById(textBoxId).value = document.getElementById(itemId).value;
+	document.getElementById(formId).submit();
 }
+
+// sets the current metric type and key level queried
+function showQueriedOptions() {
+	
+	var queryData = characterData.replace(/&#39;| /g, '');
+	queryData = queryData.slice(1,-1);
+	queryData = queryData.split(',');
+	
+	var metric = queryData[3];
+	var keyLvl = queryData[4];
+	var spec = queryData[2];
+	
+
+	function updateQueriedOption(optionQueried) {
+		var currentOption = document.getElementById(optionQueried);
+		currentOption.style.setProperty('background-color', 'var(--borderColor)');
+		currentOption.style.setProperty('border-color', 'var(--textColor)');
+		currentOption.style.setProperty('color', 'var(--backgroundColorMain)');
+		currentOption.style.setProperty('pointer-events', 'none');
+		return 0
+	}
+	function updateSpecQueried(specQueried) {
+		var specOption0 = document.getElementById('specBtn0');
+		var specOption1 = document.getElementById('specBtn1');
+		var specOption2 = document.getElementById('specBtn2');
+		var specOption3 = document.getElementById('specBtn3');
+		
+		if (specQueried == specOption0.value) { updateQueriedOption('specBtn0'); }
+		else if (specQueried == specOption1.value) { updateQueriedOption('specBtn1'); }
+		else if (specQueried == specOption2.value) { updateQueriedOption('specBtn2'); }
+		else { updateQueriedOption('specBtn3'); }
+		
+		return 0
+	}
+	
+	updateSpecQueried(spec);
+	
+	updateQueriedOption(metric);
+	updateQueriedOption(keyLvl);
+	
+	
+	
+	
+	return 0
+}
+

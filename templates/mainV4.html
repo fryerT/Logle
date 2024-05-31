@@ -1,0 +1,438 @@
+{% extends 'base.html' %}
+
+<!-- style sheets -->
+{% block stylesheet %}
+	<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV4.css")}}'>
+{% endblock %}
+
+<!-- javascript that makes it all work.. -->
+{% block javascript %}
+	<script type = 'text/javascript'>
+		var specName = '{{specName}}';
+		var charName = '{{charName}}';
+		var servName = '{{servName}}';
+		var rioInfo = '{{rioInput}}';
+	</script>
+{% endblock %}
+
+{% block title %}
+	Logle
+{% endblock %}
+
+{% block form %}
+	<!-- post method form action to gather everything included in the content wrapper -->
+	<form action = '{{url_for("home")}}' method = 'POST' id = 'submitForm' hide = 'true'>
+{% endblock %}
+
+{% block content %}
+	<!-- logle image -->
+	<div class = "header"><img class = 'logoImage'></img></div>
+	
+	<!-- content wrapper that contains the raiderIO, character, server, specialization, metric, and key level inputs-->
+	<div class = 'contWrapper' id = 'theGrid'>
+		
+		<!-- raiderIO input -->
+		<div class = 'rio' id = 'rio'>Rio Url:
+			<input type = 'text' class = 'inputBoxRio' name = 'rioInput' id = 'rioInput' value = '{{rioInput}}' autocomplete = 'off'>
+			<script>selectTextListener('rioInput');</script>
+		</div>
+
+		<!-- character name input -->
+		<div class = 'charText' id = 'char'>Character:
+			<input type = "text" class = "inputBox" id = 'charInput' name = "charName" value = '{{charName}}'>
+			<script>selectTextListener('charInput');</script>
+		</div>
+
+		<!-- server name input -->
+		<div class = 'servText' id = 'serv'>Server:
+			<input type = 'text' class = 'inputBox' id = 'servInput' name = 'servName' list = 'servers' value = '{{servName}}' autocomplete = 'off'>
+			<script>selectTextListener('servInput');</script>
+			<datalist id = 'servers'>
+				<option value = 'Aegwynn'>Aegwynn</option>
+				<option value = 'AeriePeak'>AeriePeak</option>
+				<option value = 'Agamaggan'>Agamaggan</option>
+				<option value = 'Aggramar'>Aggramar</option>
+				<option value = 'Akama'>Akama</option>
+				<option value = 'Alexstrasza'>Alexstrasza</option>
+				<option value = 'Alleria'>Alleria</option>
+				<option value = 'AltarOfStorms'>AltarOfStorms</option>
+				<option value = 'AlteracMountains'>AlteracMountains</option>
+				<option value = "Aman'Thul">Aman'Thul</option>
+				<option value = 'Andorhal'>Andorhal</option>
+				<option value = 'Anetheron'>Anetheron</option>
+				<option value = 'Antonidas'>Antonidas</option>
+				<option value = "Anub'arak">Anub'arak</option>
+				<option value = 'Anvilmar'>Anvilmar</option>
+				<option value = 'Arathor'>Arathor</option>
+				<option value = 'Archimonde'>Archimonde</option>
+				<option value = 'Area-52'>Area-52</option>
+				<option value = 'ArgentDawn'>ArgentDawn</option>
+				<option value = 'Arthas'>Arthas</option>
+				<option value = 'Arygos'>Arygos</option>
+				<option value = 'Auchindoun'>Auchindoun</option>
+				<option value = 'Azgalor'>Azgalor</option>
+				<option value = 'Azjol-Nerub'>Azjol-Nerub</option>
+				<option value = 'Azralon'>Azralon</option>
+				<option value = 'Azshara'>Azshara</option>
+				<option value = 'Azuremyst'>Azuremyst</option>
+				<option value = 'Baelgun'>Baelgun</option>
+				<option value = 'Balnazzar'>Balnazzar</option>
+				<option value = 'Barthilas'>Barthilas</option>
+				<option value = 'BlackDragonflight'>BlackDragonflight</option>
+				<option value = 'Blackhand'>Blackhand</option>
+				<option value = 'Blackrock'>Blackrock</option>
+				<option value = 'BlackwaterRaiders'>BlackwaterRaiders</option>
+				<option value = 'BlackwingLair'>BlackwingLair</option>
+				<option value = "Blade'sEdge">Blade'sEdge</option>
+				<option value = "Bladefist">Bladefist</option>
+				<option value = "BleedingHollow">BleedingHollow</option>
+				<option value = "BloodFurnace">BloodFurnace</option>
+				<option value = "Bloodhoof">Bloodhoof</option>
+				<option value = "Bloodscalp">Bloodscalp</option>
+				<option value = "Bonechewer">Bonechewer</option>
+				<option value = "BoreanTundra">BoreanTundra</option>
+				<option value = "Boulderfist">Boulderfist</option>
+				<option value = "Bronzebeard">Bronzebeard</option>
+				<option value = "BurningBlade">BurningBlade</option>
+				<option value = "BurningLegion">BurningLegion</option>
+				<option value = "Caelestrasz">Caelestrasz</option>
+				<option value = "Cairne">Cairne</option>
+				<option value = "CenarionCircle">CenarionCircle</option>
+				<option value = "Cenarius">Cenarius</option>
+				<option value = "Cho'gall">Cho'gall</option>
+				<option value = "Chromaggus">Chromaggus</option>
+				<option value = "Coilfang">Coilfang</option>
+				<option value = "Crushridge">Crushridge</option>
+				<option value = "Daggerspine">Daggerspine</option>
+				<option value = "Dalaran">Dalaran</option>
+				<option value = "Dalvengyr">Dalvengyr</option>
+				<option value = "Dark Iron">Dark Iron</option>
+				<option value = "Darkspear">Darkspear</option>
+				<option value = "Darrowmere">Darrowmere</option>
+				<option value = "Dath'Remar">Dath'Remar</option>
+				<option value = "Dawnbringer">Dawnbringer</option>
+				<option value = "Deathwing">Deathwing</option>
+				<option value = "DemonSoul">DemonSoul</option>
+				<option value = "Dentarg">Dentarg</option>
+				<option value = "Destromath">Destromath</option>
+				<option value = "Dethecus">Dethecus</option>
+				<option value = "Detheroc">Detheroc</option>
+				<option value = "Doomhammer">Doomhammer</option>
+				<option value = "Draenor">Draenor</option>
+				<option value = "Dragonblight">Dragonblight</option>
+				<option value = "Dragonmaw">Dragonmaw</option>
+				<option value = "Drak'Tharon">Drak'Tharon</option>
+				<option value = "Drak'thul">Drak'thul</option>
+				<option value = "Draka">Draka</option>
+				<option value = "Drakkari">Drakkari</option>
+				<option value = "Dreadmaul">Dreadmaul</option>
+				<option value = "Drenden">Drenden</option>
+				<option value = "Dunemaul">Dunemaul</option>
+				<option value = "Durotan">Durotan</option>
+				<option value = "Duskwood">Duskwood</option>
+				<option value = "EarthenRing">EarthenRing</option>
+				<option value = "EchoIsles">EchoIsles</option>
+				<option value = "Eitrigg">Eitrigg</option>
+				<option value = "Eldre'Thalas">Eldre'Thalas</option>
+				<option value = "Elune">Elune</option>
+				<option value = "EmeraldDream">EmeraldDream</option>
+				<option value = "Eonar">Eonar</option>
+				<option value = "Eredar">Eredar</option>
+				<option value = "Executus">Executus</option>
+				<option value = "Exodar">Exodar</option>
+				<option value = "Farstriders">Farstriders</option>
+				<option value = "Feathermoon">Feathermoon</option>
+				<option value = "Fenris">Fenris</option>
+				<option value = "Firetree">Firetree</option>
+				<option value = "Fizzcrank">Fizzcrank</option>
+				<option value = "Frostmane">Frostmane</option>
+				<option value = "Frostmourne">Frostmourne</option>
+				<option value = "Frostwolf">Frostwolf</option>
+				<option value = "Galakrond">Galakrond</option>
+				<option value = "Gallywix">Gallywix</option>
+				<option value = "Garithos">Garithos</option>
+				<option value = "Garona">Garona</option>
+				<option value = "Garrosh">Garrosh</option>
+				<option value = "Ghostlands">Ghostlands</option>
+				<option value = "Gilneas">Gilneas</option>
+				<option value = "Gnomeregan">Gnomeregan</option>
+				<option value = "Goldrinn">Goldrinn</option>
+				<option value = "Gorefiend">Gorefiend</option>
+				<option value = "Gorgonnash">Gorgonnash</option>
+				<option value = "Greymane">Greymane</option>
+				<option value = "GrizzlyHills">GrizzlyHills</option>
+				<option value = "Gul'dan">Gul'dan</option>
+				<option value = "Gundrak">Gundrak</option>
+				<option value = "Gurubashi">Gurubashi</option>
+				<option value = "Hakkar">Hakkar</option>
+				<option value = "Haomarush">Haomarush</option>
+				<option value = "Hellscream">Hellscream</option>
+				<option value = "Hydraxis">Hydraxis</option>
+				<option value = "Hyjal">Hyjal</option>
+				<option value = "Icecrown">Icecrown</option>
+				<option value = "Illidan">Illidan</option>
+				<option value = "Jaedenar">Jaedenar</option>
+				<option value = "Jubei'Thos">Jubei'Thos</option>
+				<option value = "Kael'thas">Kael'thas</option>
+				<option value = "Kalecgos">Kalecgos</option>
+				<option value = "Kargath">Kargath</option>
+				<option value = "Kel'Thuzad">Kel'Thuzad</option>
+				<option value = "Khadgar">Khadgar</option>
+				<option value = "KhazModan">KhazModan</option>
+				<option value = "Khaz'goroth">Khaz'goroth</option>
+				<option value = "Kil'jaeden">Kil'jaeden</option>
+				<option value = "Kilrogg">Kilrogg</option>
+				<option value = "KirinTor">KirinTor</option>
+				<option value = "Korgath">Korgath</option>
+				<option value = "Korialstrasz">Korialstrasz</option>
+				<option value = "KulTiras">KulTiras</option>
+				<option value = "LaughingSkull">LaughingSkull</option>
+				<option value = "Lethon">Lethon</option>
+				<option value = "Lightbringer">Lightbringer</option>
+				<option value = "Lightning'sBlade">Lightning'sBlade</option>
+				<option value = "Lightninghoof">Lightninghoof</option>
+				<option value = "Llane">Llane</option>
+				<option value = "Lothar">Lothar</option>
+				<option value = "Madoran">Madoran</option>
+				<option value = "Maelstrom">Maelstrom</option>
+				<option value = "Magtheridon">Magtheridon</option>
+				<option value = "Maiev">Maiev</option>
+				<option value = "Mal'Ganis">Mal'Ganis</option>
+				<option value = "Malfurion">Malfurion</option>
+				<option value = "Malorne">Malorne</option>
+				<option value = "Malygos">Malygos</option>
+				<option value = "Mannoroth">Mannoroth</option>
+				<option value = "Medivh">Medivh</option>
+				<option value = "Misha">Misha</option>
+				<option value = "Mok'Nathal">Mok'Nathal</option>
+				<option value = "MoonGuard">MoonGuard</option>
+				<option value = "Moonrunner">Moonrunner</option>
+				<option value = "Mug'thol">Mug'thol</option>
+				<option value = "Muradin">Muradin</option>
+				<option value = "Nagrand">Nagrand</option>
+				<option value = "Nathrezim">Nathrezim</option>
+				<option value = "Nazgrel">Nazgrel</option>
+				<option value = "Nazjatar">Nazjatar</option>
+				<option value = "Nemesis">Nemesis</option>
+				<option value = "Ner'zhul">Ner'zhul</option>
+				<option value = "Nesingwary">Nesingwary</option>
+				<option value = "Nordrassil">Nordrassil</option>
+				<option value = "Norgannon">Norgannon</option>
+				<option value = "Onyxia">Onyxia</option>
+				<option value = "Perenolde">Perenolde</option>
+				<option value = "Proudmoore">Proudmoore</option>
+				<option value = "Quel'Thalas">Quel'Thalas</option>
+				<option value = "Quel'dorei">Quel'dorei</option>
+				<option value = "Ragnaros">Ragnaros</option>
+				<option value = "Ravencrest">Ravencrest</option>
+				<option value = "Ravenholdt">Ravenholdt</option>
+				<option value = "Rexxar">Rexxar</option>
+				<option value = "Rivendare">Rivendare</option>
+				<option value = "Runetotem">Runetotem</option>
+				<option value = "Sargeras">Sargeras</option>
+				<option value = "Saurfang">Saurfang</option>
+				<option value = "ScarletCrusade">ScarletCrusade</option>
+				<option value = "Scilla">Scilla</option>
+				<option value = "Sen'jin">Sen'jin</option>
+				<option value = "Sentinels">Sentinels</option>
+				<option value = "ShadowCouncil">ShadowCouncil</option>
+				<option value = "Shadowmoon">Shadowmoon</option>
+				<option value = "Shadowsong">Shadowsong</option>
+				<option value = "Shandris">Shandris</option>
+				<option value = "ShatteredHalls">ShatteredHalls</option>
+				<option value = "ShatteredHand">ShatteredHand</option>
+				<option value = "Shu'halo">Shu'halo</option>
+				<option value = "SilverHand">SilverHand</option>
+				<option value = "Silvermoon">Silvermoon</option>
+				<option value = "SistersOfElune">SistersOfElune</option>
+				<option value = "Skullcrusher">Skullcrusher</option>
+				<option value = "Skywall">Skywall</option>
+				<option value = "Smolderthorn">Smolderthorn</option>
+				<option value = "Spinebreaker">Spinebreaker</option>
+				<option value = "Spirestone">Spirestone</option>
+				<option value = "Staghelm">Staghelm</option>
+				<option value = "SteamwheedleCartel">SteamwheedleCartel</option>
+				<option value = "Stonemaul">Stonemaul</option>
+				<option value = "Stormrage">Stormrage</option>
+				<option value = "Stormreaver">Stormreaver</option>
+				<option value = "Stormscale">Stormscale</option>
+				<option value = "Suramar">Suramar</option>
+				<option value = "Tanaris">Tanaris</option>
+				<option value = "Terenas">Terenas</option>
+				<option value = "Terokkar">Terokkar</option>
+				<option value = "Thaurissan">Thaurissan</option>
+				<option value = "TheForgottenCoast">TheForgottenCoast</option>
+				<option value = "TheScryers">TheScryers</option>
+				<option value = "TheUnderbog">TheUnderbog</option>
+				<option value = "TheVentureCo">TheVentureCo</option>
+				<option value = "ThoriumBrotherhood">ThoriumBrotherhood</option>
+				<option value = "Thrall">Thrall</option>
+				<option value = "Thunderhorn">Thunderhorn</option>
+				<option value = "Thunderlord">Thunderlord</option>
+				<option value = "Tichondrius">Tichondrius</option>
+				<option value = "TolBarad">TolBarad</option>
+				<option value = "Tortheldrin">Tortheldrin</option>
+				<option value = "Trollbane">Trollbane</option>
+				<option value = "Turalyon">Turalyon</option>
+				<option value = "TwistingNether">TwistingNether</option>
+				<option value = "Uldaman">Uldaman</option>
+				<option value = "Uldum">Uldum</option>
+				<option value = "Undermine">Undermine</option>
+				<option value = "Ursin">Ursin</option>
+				<option value = "Uther">Uther</option>
+				<option value = "Vashj">Vashj</option>
+				<option value = "Vek'nilash">Vek'nilash</option>
+				<option value = "Velen">Velen</option>
+				<option value = "Warsong">Warsong</option>
+				<option value = "Whisperwind">Whisperwind</option>
+				<option value = "Wildhammer">Wildhammer</option>
+				<option value = "Windrunner">Windrunner</option>
+				<option value = "Winterhoof">Winterhoof</option>
+				<option value = "WyrmrestAccord">WyrmrestAccord</option>
+				<option value = "Ysera">Ysera</option>
+				<option value = "Ysondre">Ysondre</option>
+				<option value = "Zangarmarsh">Zangarmarsh</option>
+				<option value = "Zul'jin">Zul'jin</option>
+				<option value = "Zuluhed">Zuluhed</option>
+			</datalist>
+		</div>
+
+		<!-- specialization name input -->
+		<div class = 'specText' id = 'spec'>Specialization:
+			<input type = "text" name = "specName"  list = 'specializations' class = "inputBox" id = 'specInput' value = '{{specName}}' autocomplete = 'off'>
+			<script>selectTextListener('specInput');</script>
+			<datalist id = 'specializations'>
+					<option value = 'Affliction'>Affliction</option>
+					<option value = 'Arcane'>Arcane</option>
+					<option value = 'Arms'>Arms</option>
+					<option value = 'Assassination'>Assassination</option>
+					<option value = 'Augmentation'>Augmentation</option>
+					<option value = 'Balance'>Balance</option>
+					<option value = 'Beast Mastery'>Beast Mastery</option>
+					<option value = 'Blood'>Blood</option>
+					<option value = 'Brewmaster'>Brewmaster</option>
+					<option value = 'Demonology'>Demonology</option>
+					<option value = 'Destruction'>Destruction</option>
+					<option value = 'Devastation'>Devastation</option>
+					<option value = 'Discipline'>Discipline</option>
+					<option value = 'Elemental'>Elemental</option>
+					<option value = 'Enhancement'>Enhancement</option>
+					<option value = 'Feral'>Feral</option>
+					<option value = 'Fire'>Fire</option>
+					<option value = 'Frost'>Frost</option>
+					<option value = 'Fury'>Fury</option>
+					<option value = 'Guardian'>Guardian</option>
+					<option value = 'Havoc'>Havoc</option>
+					<option value = 'Holy'>Holy</option>
+					<option value = 'Marksmanship'>Marksmanship</option>
+					<option value = 'Mistweaver'>Mistweaver</option>
+					<option value = 'Outlaw'>Outlaw</option>
+					<option value = 'Preservation'>Preservation</option>
+					<option value = 'Protection'>Protection</option>
+					<option value = 'Restoration'>Restoration</option>
+					<option value = 'Retribution'>Retribution</option>
+					<option value = 'Shadow'>Shadow</option>
+					<option value = 'Subtlety'>Subtlety</option>
+					<option value = 'Survival'>Survival</option>
+					<option value = 'Unholy'>Unholy</option>
+					<option value = 'Vengeance'>Vengeance</option>
+					<option value = 'Windwalker'>Windwalker</option>
+				</datalist>
+		</div>
+
+		<!-- run button -->
+		<input type = "submit" value = "Run" class = "buttonStyle" id = 'runBtn'>
+
+		<!-- metric type drop down menu -->
+		<div class = "metricText" id = 'met'>Performance Metric:
+			<select metricSelected = "Metric" type = 'text' name = "metricSelected" class = 'dropdownMenu' id = 'drpMet'>
+				<option value = {{metric}}>{{metric}}</option>
+				<option value = "DPS">DPS</option>
+				<option value = "HPS">HPS</option>
+			</select>
+			<script type="text/javascript"> remDupe('drpMet'); </script>
+		</div>
+
+		<!-- minimum key level drop down menu -->
+		<div class = "keyLvlText" id = 'keyLvl'>Minimum Key Level:
+			<select keyLvlSelected = "KeyLvl" type = 'int' name = 'minKeyLvlSelected' class = 'dropdownMenu' id = 'keyLvlCo'>
+				<option value = {{keyLvlCo}}>{{keyLvlCo}}</option>
+				<option value = 2>2</option>
+				<option value = 3>3</option>
+				<option value = 4>4</option>
+				<option value = 5>5</option>
+				<option value = 6>6</option>
+				<option value = 7>7</option>
+				<option value = 8>8</option>
+				<option value = 9>9</option>
+				<option value = 10>10</option>
+			</select>
+			<script type="text/javascript"> remDupe('keyLvlCo'); </script>
+		</div>
+		
+	</div>
+
+	<!-- the options menu wrapper -->
+	<div class = 'togWrapper' id = 'togWrapper'>
+	
+		<!-- specialization toggle option -->
+		<label class = 'checkboxContainer'>Specialization:
+			<input type = 'checkbox' onclick = 'toggleSpecialization();' id = 'specToggle' name = 'specToggle'></input>
+			<script>checkBoxStatus('specToggle', '{{specTog}}');toggleSpecialization();updateStateListener('specToggle')</script>
+			
+			<img class = 'unchecked'></img>
+			<img class = 'checked'></img>
+			<img class = 'uncheckedHover'></img>
+			<img class = 'checkedHover'></img>
+		</label>
+		
+		<!-- raiderIO toggle option -->
+		<label class = 'checkboxContainer'>RaiderIO:
+			<input type = 'checkbox' onclick = 'toggleRio();' id = 'rioToggle' name = 'rioToggle'></input>
+			<script>checkBoxStatus('rioToggle', '{{rioTog}}');updateStateListener('rioToggle');</script>
+			
+			<img class = 'unchecked'></img>
+			<img class = 'checked'></img>
+			<img class = 'uncheckedHover'></img>
+			<img class = 'checkedHover'></img>
+		</label>
+
+		<!-- autorun on paste for raiderIO toggle option -->
+		<label class = 'checkboxContainer' id = 'pasteRioCont'>Paste Autorun:
+			<input type = 'checkbox' onclick = 'togglePasteRio();' id = 'pasteRioToggle' name = 'pasteRioToggle'></input>
+			<script>checkBoxStatus('pasteRioToggle', '{{pasteRioTog}}');toggleRio();togglePasteRio();</script>
+			
+			<img class = 'unchecked'></img>
+			<img class = 'checked'></img>
+			<img class = 'uncheckedHover'></img>
+			<img class = 'checkedHover'></img>
+		</label>
+		
+		<!-- updates the grid layout based on options when the site loads -->
+		<script>updateState();</script>
+
+	</div>	
+	<!-- the gear icon that is used to toggle the visibility of the options menu wrapper -->
+	<div class = 'togTogBox'>
+		<label class = 'togTogContainer'>
+			<input type = 'checkbox' onclick = 'toggleOptions();' id = 'togOptions'></input>
+			<script>toggleOptions();</script>
+			<img class = 'togTogUnchecked'></img>
+			<img class = 'togTogChecked'></img>
+			<img class = 'togTogUncheckedHover'></img>
+			<img class = 'togTogCheckedHover'></img>
+		</label>
+	</div>
+
+	<!-- description text ***change this eventually dingus -->
+	<div class = 'descriptionText'>
+		Logle is a web application that utilizes the Warcraft Logs API to quickly crawl through all dungeon logs of the requested player. <br>
+		It then reports their highest keyLvl parses achieved per dungeon along with an average in the center block. <br>
+		Only timed dungeons that are of equal or greater key level set by the minimum key level will be considered.<br><br>
+		Specialization is not necessary, but will restrict the crawl to only that spec. <br><br>
+		Program by Scriptis (Kilpatrick-Area-52)
+	</div>
+	
+	<!-- changes the content wrapper layout whenever the orientation of the device is changed -->
+	<script>screen.orientation.addEventListener("change", updateState);</script>
+{% endblock %}
