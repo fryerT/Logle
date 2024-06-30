@@ -1,0 +1,270 @@
+#contGrid {
+	display: grid;
+	grid-template-areas:
+		'header header header header' 
+		'nav page page page' 
+		'nav page page page' 
+		'nav page page page' 
+		'nav page page page' 
+		'nav page page page'
+		'nav page page page';
+	grid-template-rows: 9vw repeat(4, 2.5vw) 33vw auto;
+	grid-template-columns: 0.265fr repeat(3, 1fr);
+
+	grid-area: contGrid;
+}
+
+#navGrid {
+	display: grid;
+
+	grid-template-areas: 'enc0' 'enc1' 'enc2' 'enc3' 'enc4' 'enc5' 'enc6' 'enc7';
+	grid-template-rows: repeat(8, 1fr);
+	grid-template-columns: 1fr;
+
+	background-color: var(--backgroundColorSecondary);
+
+	grid-area: nav;
+	
+	/*text-align: center;*/
+	justify-content: center;
+	
+	padding: 0.5vw 0.75vw 0.5vw 0.5vw;
+	
+}
+
+#header {
+	background-color: var(--backgroundColorSecondary);
+	grid-area: header;
+	border-bottom: 0.2vw solid var(--borderColor);
+	text-align: center;
+	
+	overflow: hidden;
+}
+#headerText {
+	font-size: 3.5vw;
+}
+
+.encounter {
+	display: inline-block;
+	width: 100%;
+	height: auto;
+	border: 0.2vw dotted var(--backgroundColorSecondary);
+	
+	overflow: hidden;
+}
+.encContainer {
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/* Hide the browser's default radio button */
+.encContainer input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+}
+/* On mouse-over, add a grey background color */
+.encContainer:hover input ~ .encounter {
+	box-shadow: 0 0.5vw 1vw 0 rgba(0,0,0,0.2), 0 0.375vw 1.25vw 0 rgba(0,0,0,0.19);
+}
+/* When the radio button is checked, add a blue background */
+.encContainer input:checked ~ .encounter {
+	border-color: var(--borderColor);
+}
+
+#encCont0 { grid-area: enc0; }
+#encImg0 { content: var(--encImage0); }
+#encImg1 {
+	content: var(--encImage1);
+	grid-area: enc1;
+}
+#encImg2 {
+	content: var(--encImage2);
+	grid-area: enc2;
+}
+#encImg3 {
+	content: var(--encImage3);
+	grid-area: enc3;
+}
+#encImg4 {
+	content: var(--encImage4);
+	grid-area: enc4;
+}
+#encImg5 {
+	content: var(--encImage5);
+	grid-area: enc5;
+}
+#encImg6 {
+	content: var(--encImage6);
+	grid-area: enc6;
+}
+#encImg7 {
+	content: var(--encImage7);
+	grid-area: enc7;
+}
+
+
+.page {
+	display: grid;
+	grid-template-areas:
+		'pageHeader pageHeader'
+		'pageStats pageStats'
+		'pageText pageText'
+		'pageText pageText'
+		'pageText pageText'
+		'btn btn';
+	grid-template-rows: repeat(6, 1fr);
+	grid-template-columns: repeat(2, 1fr);
+	
+	grid-area: page;
+	
+	color: var(--textColor);
+	font-size: 2vw;
+	display: none;
+	overflow: hidden;
+	border-left: 0.2vw solid var(--borderColor);
+	padding: 1vw;
+}
+.pageTextGrid {
+	display: grid;
+	grid-area: pageText;
+	
+	grid-template-rows: repeat(5, 20%);
+	grid-auto-flow: column;
+	overflow: hidden;
+	
+}
+.pageText {
+	
+}
+
+.pageStats {
+	display: grid;
+	grid-template-areas: 'ad runs adpr';
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 100%;
+	grid-area: pageStats;
+	text-align: center;
+}
+.block {
+	background-color: var(--backgroundColorSecondary);
+	height: 5vw;
+	width: 6vw;
+	border: 0.1vw solid var(--borderColor);
+	border-radius: 1vw;
+	margin: 0 auto;
+}
+#ad { grid-area: ad; }
+#runs { grid-area: runs; }
+#adpr { grid-area: adpr; }
+
+
+.pageHeader {
+	font-size: 3vw;
+	font-weight: bold;
+	text-align: center;
+	margin: auto;
+	grid-area: pageHeader;
+}
+
+
+
+.rtnBtn {
+	cursor: pointer;
+	padding: 0vw;
+	margin: 0 auto;
+	background-color: var(--backgroundColorSecondary);
+	color: var(--textColor);
+	grid-area: btn;
+	text-align: center;
+	height: 4vw;
+	width: 20vw;
+	border-radius: 0.5vw;
+	border: 0.2vw solid var(--borderColor);
+	line-height: 2vw;
+	font-size: 2vw;
+	font-style: inherit;
+}
+.rtnBtn:hover { 
+	 background-color: var(--backgroundColorHover); 
+	box-shadow: 0 0.5vw 1vw 0 rgba(0,0,0,0.2), 0 0.375vw 1.25vw 0 rgba(0,0,0,0.19); 
+}
+.rtnBtn:focus {
+	outline: none;
+	border-color: var(--textColor);
+}
+
+
+
+
+
+/* phone view */
+@media (max-width: 450px) {
+	
+	
+	#contGrid {
+		grid-template-areas:
+			'header header'
+			'nav page';
+		grid-template-columns: 1fr 4.5fr;
+		grid-template-rows: 8% 92%;
+	}
+	
+	#navGrid {
+		padding: 1.5vw 2vw 1.5vw 1.5vw;
+	}
+	
+	
+	#headerText {
+		font-size: 6vw;
+	}
+	
+	.page {
+		grid-template-rows: 0.5fr repeat(5, 1fr);
+		grid-template-columns: repeat(2, 1fr);
+		font-size: 6vw;
+		padding: 2vw;
+	}
+	.pageHeader {
+		font-size: 6vw;
+	}
+	.pageTextGrid {
+		display: grid;
+		grid-area: pageText;
+		
+		grid-template-rows: repeat(10, 10%);
+		grid-template-columns: 1fr;
+		overflow: auto;
+		font-size: 4vw;
+	}
+	
+	.encounter {
+		border: 0.6vw dotted var(--backgroundColorSecondary);
+	}
+	
+	.rtnBtn {
+		height: 10vw;
+		width: 50vw;
+		border-radius: 1.25vw;
+		border: 0.5vw solid var(--borderColor);
+		line-height: 5vw;
+		font-size: 5vw;
+	}
+	
+	.block {
+		height: 15vw;
+		width: 18vw;
+		border: none;
+		border-radius: 1vw;
+		margin: 0 auto;
+	}
+	
+	#descText {
+		font-size: 4vw;
+	}
+	
+	
+}

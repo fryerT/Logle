@@ -1,0 +1,364 @@
+/* content grid that contains the average, return button, and all encounters */
+#contGrid {
+	display: grid;
+	grid-template-areas:
+		'header header'
+		'enc0 enc1'
+		'enc2 enc3'
+		'enc4 enc5'
+		'enc6 enc7'
+		'btn btn'
+		'. .';
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: repeat(5, 7vw) 5vw auto;
+	grid-gap: 2vw;
+	margin: 0 1vw;
+	grid-area: contGrid;
+	height: 100%;
+}
+
+/* header, includes character name, server, and average parse */
+#header {
+	border-radius: 0vw;
+	border: 0.2vw solid var(--backgroundColor);
+	height: 8vw;
+	margin-top: 0.5vw;
+	border-bottom: 0.2vw solid var(--borderColor);
+	font-family: inherit;
+	background-color: var(--backgroundColor);
+	color: inherit;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+	width: 100%;
+	grid-area: header;
+}	
+
+/* encounter grid that is located inside of the content grid, contains the encounter image, name,amount, and parse */
+.encGrid {
+	display: grid;
+	grid-template-areas:
+		'img name'
+		'img amount'
+		'img parse';
+	grid-template-columns: 1fr 3fr;
+	grid-template-rows: 2.85vw 2.25vw 2.25vw;
+	height: 8vw;
+	border-radius: 0.5vw;
+
+	background-color: var(--backgroundColorSecondary);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	text-align: center;
+	width: 100%;
+}
+/* assign each encounter grid a grid-area */
+#encGrid0 { grid-area: enc0; }
+#encGrid1 { grid-area: enc1; }
+#encGrid2 { grid-area: enc2; }
+#encGrid3 { grid-area: enc3; }
+#encGrid4 { grid-area: enc4; }
+#encGrid5 { grid-area: enc5; }
+#encGrid6 { grid-area: enc6; }
+#encGrid7 { grid-area: enc7; }
+/* image that is displayed inside of it's corresponding grid */
+.encImg {
+	height: 100%;
+	width: 100%;
+	margin: 0.35vw 1vw 0.3vw 1vw;
+	grid-area: img;
+}
+#encImage0 { content: var(--encImage0); }
+#encImage1 { content: var(--encImage1); }
+#encImage2 { content: var(--encImage2); }
+#encImage3 { content: var(--encImage3); }
+#encImage4 { content: var(--encImage4); }
+#encImage5 { content: var(--encImage5); }
+#encImage6 { content: var(--encImage6); }
+#encImage7 { content: var(--encImage7); }
+
+/*	text that is displayed inside of each encGrid && the character name and average parse that is displayed in the header */
+.encName, .encParse, #characterName, #avgParse { font-size: 2.25vw; font-weight: bold; }
+.encAmount, #characterSpec { font-size: 2vw; font-style: italic; grid-area: amount; }
+.encName { grid-area: name; }
+.encParse { grid-area: parse; }
+#characterName { text-transform: capitalize; }
+
+/* button the user clicks to return to the main page */
+#rtnBtn {
+	height: 4vw;
+	width: 20vw;
+	border-radius: 0.5vw;
+	border: 0.3vw solid var(--borderColor);
+	line-height: 2vw;
+	font-size: 2vw;
+	cursor: pointer;
+	margin: 0 auto;
+	background-color: var(--backgroundColorSecondary);
+	color: inherit;
+	font-family: inherit;
+	grid-area: btn;
+	text-align: center;
+}
+
+/* start of specialization choice */
+#specChoiceGrid {
+	display: none;
+	grid-template-areas: '.' 'spec0' 'spec1' 'spec2' 'spec3';
+	grid-template-rows: repeat(5, 1fr);
+	
+	top: 25vw;
+	right: 1.5vw;
+	border: 0.2vw solid var(--borderColor);
+	border-radius: 0.5vw;
+	height: 9.75vw;
+	width: 10vw;
+	
+	font-size: 1.5vw;
+	grid-template-columns: 1fr;
+	
+	position: fixed;
+	background: var(--backgroundColorMain);
+
+	text-align: center;
+}
+#specBtn0 { grid-area: spec0; }
+#specBtn1 { grid-area: spec1; }
+#specBtn2 { grid-area: spec2; }
+#specBtn3 { grid-area: spec3; }
+#newSpec { display: none; }
+.specChoiceBtn {
+	display: none;
+	border: 0.1vw solid var(--borderColor);
+	height: 2vw;
+	font-size: 1vw;
+	background: var(--backgroundColorSecondary);
+	width: 100%;
+	color: inherit;
+	font-family: inherit;
+	font-weight: bold;
+	cursor: pointer;
+}
+/* end of specialization choice */
+
+
+/* number of runs */
+#numOfRunsGrid {
+	display: grid;
+	top: 8.5vw;
+	right: 2.65vw;
+	grid-template-columns: 8vw;
+	border-radius: 0.5vw;
+	border: 0.2vw solid var(--borderColor);
+	font-size: 1.25vw;
+
+	position: fixed;
+	background-color: var(--backgroundColorMain);
+	color: inherit;
+	font-family: inherit;
+	text-align: center;
+}
+
+
+
+/* start of queryOptions */
+#queryOptionsGrid {
+	display: grid;
+	grid-template-areas:
+		'metricOption metricOption metricOption'
+		'keyLvlOption keyLvlOption keyLvlOption'
+		'keyLvlOption keyLvlOption keyLvlOption'
+		'keyLvlOption keyLvlOption keyLvlOption';
+	grid-template-columns: repeat(3, 1fr);
+	
+	position: fixed;
+	top: 8.5vw;
+	left: 1.25vw;
+	
+	width: 10vw;
+	height: 10vw;
+	border-radius: 0.5vw;
+	border: 0.2vw solid var(--borderColor);
+	
+	background-color: var(--backgroundColorMain);
+}
+
+#metricOptionsGrid {
+	display: grid;
+	grid-template-areas:
+		'hpsOption dpsOption';
+	grid-area: metricOption;
+	grid-template-columns: repeat(2, 1fr);
+	grid-template-rows: auto;
+	height: 100%;
+	width: 100%;
+}
+#DPS { grid-area: dpsOption; }
+#HPS { grid-area: hpsOption; }
+.metricButton {
+	cursor: pointer;
+	margin: 0.2vw;
+	background-color: var(--backgroundColorSecondary);
+	
+	font-family: inherit;
+	font-size: 1vw;
+	font-weight: bold;
+	color: inherit;
+	text-align: center;
+	
+	padding: inherit;
+	
+	border-radius: 0.5vw;
+	border: 0.1vw solid var(--borderColor);
+}
+
+#keyLvlOptionsGrid {
+	display: grid;
+	grid-template-areas:
+		'. . .'
+		'. . .'
+		'. . .';
+	grid-area: keyLvlOption;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto;
+
+	height: 100%;
+	width: 100%;
+}
+.keyLvlButton {
+	cursor: pointer;
+	margin: 0.2vw;
+	background-color: var(--backgroundColorSecondary);
+	
+	font-family: inherit;
+	font-size: 1vw;
+	font-weight: bold;
+	color: inherit;
+	text-align: center;
+	
+	padding: inherit;
+	
+	border-radius: 0.5vw;
+	border: 0.1vw solid var(--borderColor);
+}
+/* end of query options */
+
+
+
+
+
+/* focus and hover settings*/
+#rtnBtn:focus, .specChoiceBtn:focus, .keyLvlButton:focus, .metricButton:focus {
+	outline: none;
+	border-color: var(--textColor);
+}
+#rtnBtn:hover, .specChoiceBtn:hover, .keyLvlButton:hover, .metricButton:hover { 
+	background-color: var(--backgroundColorHover);
+	box-shadow: 0 0.5vw 1vw 0 rgba(0,0,0,0.2), 0 0.375vw 1.25vw 0 rgba(0,0,0,0.19);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* phone settings */
+@media (max-width: 450px) {
+
+	#contGrid {
+		grid-template-areas: 'header' 'enc0' 'enc1' 'enc2' 'enc3' 'enc4' 'enc5' 'enc6' 'enc7' 'btn';
+		grid-template-columns: 1fr;
+		grid-template-rows:  15vw repeat(8, 10vw) 10vw;
+		grid-gap: 4vw;
+		margin: 0 2vw;
+	}
+	
+	.encGrid {
+		grid-template-areas:
+			'img name parse'
+			'img amount parse';
+		grid-template-columns: 1fr 4fr 1fr;
+		grid-template-rows: 0.5fr 1fr;
+		border-radius: 1vw;
+		height: auto;
+	}
+	.encImg {
+		height: 9vw;
+		width: 9vw;
+		margin: 0.6vw;
+	}
+
+	#specChoiceGrid {
+		grid-template-rows: repeat(4, 1fr);
+		
+		background: none;
+		top: 131vw;
+		right: 1.5vw;
+		border: none;
+		border-radius: 1.25vw;
+		height: 24.375vw;
+		width: 25vw;
+		
+		font-size: 3.75vw;
+	}
+	.specChoiceBtn {
+		border: 0.25vw solid var(--borderColor);
+		height: 5vw;
+		font-size: 2.5vw;
+	}
+	
+	#numOfRunsGrid { display: none; }
+	
+	#rtnBtn {
+		height: 8vw;
+		width: 40vw;
+		border-radius: 1vw;
+		border: 0.6vw solid var(--borderColor);
+		line-height: 4vw;
+		font-size: 4vw;
+	}
+
+	#header {
+		border-radius: 0vw;
+		border-bottom: 0.4vw solid var(--borderColor);
+		height: 16vw;
+	}	
+	
+	.encName, .encParse, #characterName, #avgParse { font-size: 4.5vw; }
+	.encAmount, #characterSpec { font-size: 4vw; }
+	.encParse { line-height: 10vw; }
+	
+	
+	
+
+	#rtnBtn:hover, .specChoiceBtn:hover, keyLvlButton:hover, metricButton:hover { box-shadow: 0 1vw 2vw 0 rgba(0,0,0,0.2), 0 0.75vw 2.5vw 0 rgba(0,0,0,0.19); }
+	
+	
+	
+	#queryOptionsGrid {
+		top: 131vw;
+		left: 1.25vw;
+		
+		width: 25vw;
+		height: 25vw;
+		border-radius: 1.25vw;
+		border: 0.5vw solid var(--borderColor);
+		
+		background-color: var(--backgroundColorMain);
+	}
+	.metricButton, .keyLvlButton {
+		margin: 0.5vw;
+		font-size: 2.5vw;
+		border-radius: 1.25vw;
+		border: 0.25vw solid var(--borderColor);
+	}
+}

@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 
-<!-- Prevents Caching, Should remove this Eventually -->
-<meta http-equiv = 'Cache-Control' content = 'no-cache, no-store, must-revalidate'/>
-<meta http-equiv = 'Pragma' content = 'no-cache'/>
-<meta http-equiv = 'Expires' content = '0'/>
-<!-- -->
-
 <!-- website icon -->
 <link rel = 'shortcut icon' href = '{{ url_for("static", filename = "images/logleIcon.ico") }}'>
 
 <!-- style sheet -->
+<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'varsV2.css')}}">
 {% block stylesheet %}{% endblock %}
-<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'vars.css')}}">
 
 
 <!-- screen viewport information -->
@@ -22,7 +16,7 @@
 
 <!-- javascript that makes it all work.. -->
 {% block javascript %}{% endblock %}
-<script type = 'text/javascript' src = '{{url_for("static", filename = "scriptsV1.2.js")}}'></script>
+<script src = '{{url_for("static", filename = "scriptsV2.js")}}'></script>
 
 
 {% block form %}{% endblock %}
@@ -33,15 +27,14 @@
 	<title>{% block title %}{% endblock %}</title>
 
 	<!-- main wrapper/grid that contains the headerText, description, side banners and content wrapper -->
-	<div class = "wrapper">
+	<div id = 'baseGrid'>
+	
+		<!-- banners -->
+		<div class = 'banner' id = 'banL'></div>
+		<div class = 'banner' id = 'banR'></div>
 		
 		{% block content %}{% endblock %}
 
-
-		<!-- banners -->
-		<div class = 'bannerLeft'></div>
-		<div class = 'bannerRight'></div>
-		
 	</div>
 
 </html>

@@ -1,0 +1,87 @@
+/* grid that makes up the webpage, contains .error, .message, and .rtnBtn */
+#contGrid {
+	display: grid;
+	grid-template-areas:
+			'error' 
+			'.' 
+			'msg' 
+			'rtn' 
+			'.' ;
+	grid-template-rows: 2vw 20vw 15vw 5vw auto;
+	grid-template-columns: 1fr;
+	grid-area: contGrid;
+}
+
+/* big error text at the top of the page */
+#error { 
+	font-weight: bold;
+	font-family: inherit;
+	grid-area: error;
+	text-align: center;
+	color: var(--errorColor);
+	font-size: 20vw;
+}
+
+/* message text that explains possible errors */
+#message {
+	font-style: italic;
+	grid-area: msg;
+	text-align: left;
+	color: inherit;
+	margin: 0 2vw;
+	font-size: 2.75vw;
+}
+
+/* button that returns to the main page */
+#rtnBtn {
+	font-family: inherit;
+	text-align: center;
+	cursor: pointer;
+	margin: auto;
+	background-color: var(--backgroundColorSecondary);
+	color: inherit;
+	grid-area: rtn;
+	font-size: 7vw;
+	border-radius: 0.5vw;
+	border: 0.4vw solid var(--errorColor);
+	width: 30vw;
+	height: 7.75vw;
+	line-height: 1.375vw;
+}
+#rtnBtn:hover { 
+	background-color: var(--backgroundColorHover); 
+	box-shadow: 0 0.5vw 1vw 0 rgba(0,0,0,0.2), 0 0.375vw 1.25vw 0 rgba(0,0,0,0.19);
+}
+#rtnBtn:focus { outline: none; background-color: var(--backgroundColorHover); }
+
+.banner { background: var(--errorBannerImage); }
+
+
+
+/* phone view */
+@media (max-width: 450px) {
+	#contGrid {
+		grid-template-areas:
+				'.'
+				'error' 
+				'msg'
+				'rtn'
+				'.';
+		grid-template-rows: 40vw 40vw 35vw 5vw auto;
+		grid-template-columns: 1fr;
+	}
+
+	#error { font-size: 30vw; text-decoration-line: underline; }
+
+	#message { font-size: 3.5vw; }
+
+	#rtnBtn {
+		font-size: 8.75vw;
+		border-radius: 1vw;
+		border: 0.5vw solid var(--errorColor);
+		width: 37.5vw;
+		height: 9.6875vw;
+		line-height: 1.71875vw;
+	}
+	#rtnBtn:hover { box-shadow: 0 0.625vw 1vw 0 rgba(0,0,0,0.2), 0 0.46875vw 1.5625w 0 rgba(0,0,0,0.19);	}
+}

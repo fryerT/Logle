@@ -1,0 +1,19 @@
+{% extends 'baseV2.html' %}
+
+{% block stylesheet %}
+	<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'errorStylesV4.css')}}">
+{% endblock %}
+
+{% block form %}
+	<form id = 'returnHome' action = '{{url_for("home")}}'></form>
+{% endblock %}
+
+{% block content %}
+	<div id = 'contGrid'>
+		<div id = 'error'>ERROR</div>
+		<div id = 'message'>-Check your inputs<br>-Make sure Javascript and Cookies are enabled<br>-The user may have hidden their logs</div>
+		<div class = 'bannerLeft'></div>
+		<div class = 'bannerRight'></div>
+		<input type = 'submit' id = 'rtnBtn' onclick = 'submit("returnHome")' value = 'Return'></div>
+	</div>
+{% endblock %}

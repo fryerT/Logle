@@ -48,3 +48,62 @@
 	--errorBannerImage: url(images/bannerError.png);
 	/***********/
 }
+
+/*	html/body	*/
+html, body { 
+	height: 95vh;
+	background-color: var(--backgroundColorMain);
+	font-family: var(--defaultFont);
+	caret-color: transparent;
+	color: var(--textColor);
+}
+
+/* base grid layout of the website */
+#baseGrid {
+	display: grid;
+	grid-template-areas:
+		'banL contGrid contGrid contGrid contGrid banR' 
+		'banL contGrid contGrid contGrid contGrid banR' 
+		'banL contGrid contGrid contGrid contGrid banR' 
+		'banL contGrid contGrid contGrid contGrid banR' 
+		'banL contGrid contGrid contGrid contGrid banR' 
+		'banL contGrid contGrid contGrid contGrid banR'
+		'banL contGrid contGrid contGrid contGrid banR';
+	grid-template-rows: 9vw repeat(4, 2.5vw) 33vw auto;
+	grid-template-columns: 12.9vw 7vw repeat(2, 30.1vw) 7vw 12.9vw;
+	grid-gap: 0vw;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+/*	banner	*/
+.banner { 
+	background-size: cover;
+	background-image: var(--bannerImage);
+	margin: 0; 
+}
+#banL {
+	grid-area: banL;
+}
+#banR {
+	grid-area: banR;
+}
+
+
+/* phone styles */
+@media (max-width: 450px) {
+	#baseGrid {
+		display: grid;
+		grid-template-areas:
+			'contGrid';
+		grid-template-rows: 1fr;
+		grid-template-columns: 1fr
+	}
+	
+	.banner {
+		display: none;
+	}
+}

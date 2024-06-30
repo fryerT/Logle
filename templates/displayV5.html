@@ -1,0 +1,176 @@
+{% extends 'baseV2.html' %}
+
+{% block stylesheet %}
+	<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'displayStylesV4.css')}}">
+{% endblock %}
+
+{% block javascript %}
+	<script type = 'text/javascript'> 
+		specList = '{{specList}}'; 
+		characterData = '{{queryData}}';
+	</script>
+{% endblock %}
+
+{% block form %}
+	<form action = '{{url_for("home")}}' method = 'GET' id = "home"></form>
+{% endblock %}
+
+{% block title %}
+	{{name}}
+{% endblock %}
+
+{% block content %}
+	<!-- layout of the content -->
+	<div id = 'contGrid'>
+	
+		<!-- return button -->
+		<button type = 'button' id = 'rtnBtn' onclick = 'submit("home")'>Return</button>
+		
+		<!-- average -->
+		<div id = 'header'>
+			<div id = 'characterName'>{{name}}</div>
+			<div id = 'characterSpec'>{{spec}}</div>
+			<div id = 'avgParse'>{{avgParse}}</div>
+			<script type="text/javascript"> parseColor('{{avgParse}}', 'avgParse'); </script>
+		</div>
+
+		<!-- 0 -->
+		<div class = 'encGrid' id = 'encGrid0'>
+			<img class = 'encImg' id = 'encImage0'>
+			<div class = 'encName'>{{name0}}</div>
+			<div class = 'encAmount'>{{amount0}}{{spec0}}</div>
+			<div class = 'encParse' id = 'zero'>{{parse0}}</div>
+			<script type="text/javascript"> parseColor('{{parse0}}', 'zero'); </script>
+		</div>
+
+		<!-- 1 -->
+		<div class = 'encGrid' id = 'encGrid1'>
+			<img class = 'encImg' id = 'encImage1'>
+			<div class = 'encName'>{{name1}}</div>					
+			<div class = 'encAmount'>{{amount1}}{{spec1}}</div>
+			<div class = 'encParse' id = 'one'>{{parse1}}</div>
+			<script type="text/javascript"> parseColor('{{parse1}}', 'one'); </script>
+		</div>
+	
+		<!-- 2 -->
+		<div class = 'encGrid' id = 'encGrid2'>
+			<img class = 'encImg' id = 'encImage2'>
+			<div class = 'encName'>{{name2}}</div>
+			<div class = 'encAmount'>{{amount2}}{{spec2}}</div>
+			<div class = 'encParse' id = 'two'>{{parse2}}</div>
+			<script type="text/javascript"> parseColor('{{parse2}}', 'two'); </script>
+		</div>
+
+		<!-- 3 -->
+		<div class = 'encGrid' id = 'encGrid3'>
+			<img class = 'encImg' id = 'encImage3'>
+			<div class = 'encName'>{{name3}}</div>
+			<div class = 'encAmount'>{{amount3}}{{spec3}}</div>
+			<div class = 'encParse' id = 'three'>{{parse3}}</div>
+			<script type="text/javascript"> parseColor('{{parse3}}', 'three'); </script>
+		</div>
+				
+		<!-- 4 -->
+		<div class = 'encGrid' id = 'encGrid4'>
+			<img class = 'encImg' id = 'encImage4'>
+			<div class = 'encName'>{{name4}}</div>
+			<div class = 'encAmount'>{{amount4}}{{spec4}}</div>
+			<div class = 'encParse' id = 'four'>{{parse4}}</div>
+			<script type="text/javascript"> parseColor('{{parse4}}', 'four'); </script>
+		</div>
+			
+		<!-- 5 -->
+		<div class = 'encGrid' id = 'encGrid5'>
+			<img class = 'encImg' id = 'encImage5'>
+			<div class = 'encName'>{{name5}}</div>
+			<div class = 'encAmount'>{{amount5}}{{spec5}}</div>
+			<div class = 'encParse' id = 'five'>{{parse5}}</div>
+			<script type="text/javascript"> parseColor('{{parse5}}', 'five'); </script>
+		</div>
+			
+		<!-- 6 -->
+		<div class = 'encGrid' id = 'encGrid6'>
+			<img class = 'encImg' id = 'encImage6'>
+			<div class = 'encName'>{{name6}}</div>
+			<div class = 'encAmount'>{{amount6}}{{spec6}}</div>
+			<div class = 'encParse' id = 'six'>{{parse6}}</div>
+			<script type="text/javascript"> parseColor('{{parse6}}', 'six'); </script>
+		</div>
+				
+		<!-- 7 -->
+		<div class = 'encGrid' id = 'encGrid7'>
+			<img class = 'encImg' id = 'encImage7'>
+			<div class = 'encName'>{{name7}}</div>
+			<div class = 'encAmount'>{{amount7}}{{spec7}}</div>
+			<div class = 'encParse' id = 'seven'>{{parse7}}</div>
+			<script type="text/javascript"> parseColor('{{parse7}}', 'seven'); </script>
+		</div>
+		
+		
+		
+		<!-- widget for the number of logs that the program looks at -->
+		<div id = 'numOfRunsGrid'>
+			<b><u>Log Count</u></b>
+			<i>
+				AA: {{numRuns0}}<br>
+				BH: {{numRuns1}}<br>
+				HoI: {{numRuns2}}<br>
+				Nel: {{numRuns3}}<br>
+				RLP: {{numRuns4}}<br>
+				AV: {{numRuns5}}<br>
+				NO: {{numRuns6}}<br>
+				Uld: {{numRuns7}}<br>
+			</i>
+			<b>Total: {{numRunsTotal}}</b>
+		</div>
+
+		<!-- if more than one spec is detected, this gives the option to filter to a specific one -->
+		<form action = '/{{name}}/{{server}}/newSpec/{{metric}}/{{keyLevelCO}}' method = 'POST' id = 'specForm'>
+			<div id = 'specChoiceGrid'> Specs
+				<!-- -->
+				<input type = 'submit' class = 'specChoiceBtn' id = 'specBtn0' onclick = 'setAndSubmit(this.id, "specForm", "newSpec");'>
+				<input type = 'submit' class = 'specChoiceBtn' id = 'specBtn1' onclick = 'setAndSubmit(this.id, "specForm", "newSpec");'>
+				<input type = 'submit' class = 'specChoiceBtn' id = 'specBtn2' onclick = 'setAndSubmit(this.id, "specForm", "newSpec");'>
+				<input type = 'submit' class = 'specChoiceBtn' id = 'specBtn3' onclick = 'setAndSubmit(this.id, "specForm", "newSpec");'>
+				<!-- -->
+				<input type = 'text' id = 'newSpec' name = 'newSpec'>
+			</div>
+			<script>specChoice();</script>
+		</form>
+
+		<!-- query options on the left side of the page -->
+		<div id = 'queryOptionsGrid'>
+			<!-- metric options -->
+			<div id = 'metricOptionsGrid'>
+				<!-- dps -->
+				<input type = 'button' class = 'metricButton' value = 'DPS' id = 'DPS' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<!-- hps -->
+				<input type = 'button' class = 'metricButton' value = 'HPS' id = 'HPS' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+			</div>
+			
+			<!-- key level options -->
+			<div id = 'keyLvlOptionsGrid'>
+				<!-- key levels -->
+				<input type = 'button' class = 'keyLvlButton' value = '2' id = '2' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '3' id = '3' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '4' id = '4' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '5' id = '5' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '6' id = '6' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '7' id = '7' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '8' id = '8' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '9' id = '9' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+				<input type = 'button' class = 'keyLvlButton' value = '10' id = '10' onclick = 'setAndSubmit(this.id, "queryOptionsForm", "newQueryOption")'>
+			</div>
+			
+			<!-- form -->
+			<form action = '/{{name}}/{{server}}/{{spec}}/{{metric}}/{{keyLevelCO}}' method = 'POST' id = 'queryOptionsForm' style = 'display: none;'>
+				<!-- textbox that will hold the value needed to be updated -->
+				<input type = 'text' id = 'newQueryOption' name = 'newQueryOption' style = 'display: none;'>
+			</form>
+			
+			<script>showQueriedOptions();</script>
+		</div> 
+
+	</div>
+
+{% endblock %}

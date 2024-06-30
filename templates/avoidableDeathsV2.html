@@ -1,0 +1,398 @@
+{% extends 'baseV2.html' %}
+
+{% block stylesheet %}
+	<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'avoidableDeathsV2.css')}}">
+{% endblock %}
+
+{% block javascript %}
+	<script>
+		var encounters = '';
+		var pages = '';
+		var currentEncounter = '';
+		
+		window.onload = function() {
+		
+			// make an array of radio button objects
+			encounters = document.forms['encChoiceForm'].elements['encChoice'];
+			
+			// make an array of all page class objects
+			pages = document.getElementsByClassName('page');
+			
+			// add onclick functions to them
+			for (let i = 0; i < encounters.length; i++) {
+				encounters[i].onclick = function() {
+					for (let x = 0; x < pages.length; x++) {
+						if (x == i) { pages[x].style.display = 'grid'; }
+						else { pages[x].style.display = 'none'; }
+					}
+				}
+			}
+		}
+	</script>
+{% endblock %}
+
+{% block form %}
+	<form action = '{{url_for("home")}}' method = 'GET' id = "home"></form>
+{% endblock %}
+
+{% block title %}
+	{{name}} AD
+{% endblock %}
+
+{% block content %}
+	<div id = 'contGrid'>
+		
+		<div id = 'header'>
+			<div id = 'headerText'>
+				{{name}}<br>{{server}}
+			</div>
+		</div>
+
+
+		<!-- sidebar nav -->
+		<form id = 'navGrid' name = 'encChoiceForm'>
+
+				<!-- enc0 -->
+				<label class = 'encContainer' id = 'encCont0'>
+					<input type = 'radio' name = 'encChoice' value = '0'/>
+					<span class = 'encounter' id = 'encImg0'/>
+				</label>
+				
+				<!-- enc1 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '1'/>
+					<span class = 'encounter' id = 'encImg1'/>
+				</label>
+				
+				<!-- enc2 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '2'/>
+					<span class = 'encounter' id = 'encImg2'/>
+				</label>
+				
+				<!-- enc3 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '3'/>
+					<span class = 'encounter' id = 'encImg3'/>
+				</label>
+				
+				<!-- enc4 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '4'/>
+					<span class = 'encounter' id = 'encImg4'/>
+				</label>
+				
+				<!-- enc5 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '5'/>
+					<span class = 'encounter' id = 'encImg5'/>
+				</label>
+				
+				<!-- enc6 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '6'/>
+					<span class = 'encounter' id = 'encImg6'/>
+				</label>
+				
+				<!-- enc7 -->
+				<label class = 'encContainer'>
+					<input type = 'radio' name = 'encChoice' value = '7'/>
+					<span class = 'encounter' id = 'encImg7'/>
+				</label>
+				
+		</form>
+			
+
+
+
+		<div class = 'page' id = 'pg0'>
+		
+			<div class = 'pageHeader'>
+				{{encName0}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD
+					<br>
+					{{ad0}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs0}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R
+					<br>
+					{{adpr0}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath0 in encText0 %}
+					<div class = 'pageText'>{{encDeath0}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg1'>
+		
+			<div class = 'pageHeader'>
+				{{encName1}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD
+					<br>
+					{{ad1}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs1}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R
+					<br>
+					{{adpr1}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath1 in encText1 %}
+					<div class = 'pageText'>{{encDeath1}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg2'>
+		
+			<div class = 'pageHeader'>
+				{{encName2}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD
+					<br>
+					{{ad2}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs2}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R
+					<br>
+					{{adpr2}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath2 in encText2 %}
+					<div class = 'pageText'>{{encDeath2}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg3'>
+		
+			<div class = 'pageHeader'>
+				{{encName3}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD<br>{{ad3}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs3}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R<br>{{adpr3}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath3 in encText3 %}
+					<div class = 'pageText'>{{encDeath3}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg4'>
+		
+			<div class = 'pageHeader'>
+				{{encName4}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD<br>{{ad4}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs4}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R<br>{{adpr4}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath4 in encText4 %}
+					<div class = 'pageText'>{{encDeath4}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg5'>
+		
+			<div class = 'pageHeader'>
+				{{encName5}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD<br>{{ad5}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs5}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R<br>{{adpr5}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath5 in encText5 %}
+					<div class = 'pageText'>{{encDeath5}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg6'>
+		
+			<div class = 'pageHeader'>
+				{{encName6}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD<br>{{ad6}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs6}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R<br>{{adpr6}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath6 in encText6 %}
+					<div class = 'pageText'>{{encDeath6}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		<div class = 'page' id = 'pg7'>
+		
+			<div class = 'pageHeader'>
+				{{encName7}}
+			</div>
+			
+			<div class = 'pageStats'>
+			
+				<div class = 'block' id = 'ad'>
+					AD<br>{{ad7}}
+				</div>
+				
+				<div class = 'block' id = 'runs'>
+					Runs<br>{{runs7}}
+				</div>
+				
+				<div class = 'block' id = 'adpr'>
+					AD/R<br>{{adpr7}}
+				</div>
+				
+			</div>
+			
+			<div class = 'pageTextGrid'>
+				{% for encDeath7 in encText7 %}
+					<div class = 'pageText'>{{encDeath7}}</div>
+				{% endfor %}
+			</div>
+			
+			<!-- return button -->
+			<button type = 'button' class = 'rtnBtn' onclick = 'submit("home")'>Home</button>
+			
+		</div>
+		
+		
+		<div class = 'page' style = 'display: block;'>
+			<div id = 'descText'>
+				THIS PAGE IS A WORK IN PROGRESS
+				<br><br>
+				With that said, click on a dungeon to see what things you die to that you really shouldn't.
+				<br><br>
+				AD = Avoidable Deaths<br>
+				AD/R = Avoidable Deaths Per Run<br><br>
+				It's like a K/D ratio, but you want it low and only healers really care about it.
+			</div>
+		</div>
+	
+	</div>
+{% endblock %}

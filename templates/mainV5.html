@@ -1,17 +1,44 @@
-{% extends 'base.html' %}
+{% extends 'baseV2.html' %}
 
-<!-- style sheets -->
 {% block stylesheet %}
-	<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV4.css")}}'>
+	<link rel = 'stylesheet' type = 'text/css' href = '{{url_for("static", filename = "mainStylesV5.css")}}'>
+	<link rel = "stylesheet" type = "text/css" href = "{{url_for('static', filename = 'fadeV1.css')}}">
 {% endblock %}
 
-<!-- javascript that makes it all work.. -->
 {% block javascript %}
-	<script type = 'text/javascript'>
+	<script>
 		var specName = '{{specName}}';
 		var charName = '{{charName}}';
 		var servName = '{{servName}}';
 		var rioInfo = '{{rioInput}}';
+		
+		
+		// sleep/wait
+		function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+
+		
+		window.onload = async function() {
+			var textClassObjs = document.getElementsByClassName('text');
+			var runBtn = document.getElementById('runBtn');
+			
+			for (var i = 0; i < textClassObjs.length; i++) {
+				textClassObjs[i].classList.add('fade');
+			}
+			runBtn.classList.add('fade');
+			
+			await sleep(1000);
+			
+			for (var i = 0; i < textClassObjs.length; i++) {
+				textClassObjs[i].classList.remove('fade');
+				textClassObjs[i].style.opacity = '1';
+			}
+			runBtn.classList.remove('fade');
+			runBtn.style.opacity = '1';
+			
+		}
+	
+		
+		
 	</script>
 {% endblock %}
 
@@ -25,27 +52,26 @@
 {% endblock %}
 
 {% block content %}
-	<!-- logle image -->
-	<div class = "header"><img class = 'logoImage'></img></div>
+	<div id = 'contGrid'>
 	
-	<!-- content wrapper that contains the raiderIO, character, server, specialization, metric, and key level inputs-->
-	<div class = 'contWrapper' id = 'theGrid'>
+		<!-- logle image -->
+		<div id = 'header'><img id = 'logoImage'></img></div>
 		
 		<!-- raiderIO input -->
-		<div class = 'rio' id = 'rio'>Rio Url:
-			<input type = 'text' class = 'inputBoxRio' name = 'rioInput' id = 'rioInput' value = '{{rioInput}}' autocomplete = 'off'>
+		<div class = 'text' id = 'rio'>Rio Url:
+			<input type = 'text' class = 'inputText' name = 'rioInput' id = 'rioInput' value = '{{rioInput}}' autocomplete = 'off'>
 			<script>selectTextListener('rioInput');</script>
 		</div>
 
 		<!-- character name input -->
-		<div class = 'charText' id = 'char'>Character:
-			<input type = "text" class = "inputBox" id = 'charInput' name = "charName" value = '{{charName}}'>
+		<div class = 'text' id = 'char'>Character:
+			<input type = "text" class = "inputText" id = 'charInput' name = "charName" value = '{{charName}}'>
 			<script>selectTextListener('charInput');</script>
 		</div>
 
 		<!-- server name input -->
-		<div class = 'servText' id = 'serv'>Server:
-			<input type = 'text' class = 'inputBox' id = 'servInput' name = 'servName' list = 'servers' value = '{{servName}}' autocomplete = 'off'>
+		<div class = 'text' id = 'serv'>Server:
+			<input type = 'text' class = 'inputText' id = 'servInput' name = 'servName' list = 'servers' value = '{{servName}}' autocomplete = 'off'>
 			<script>selectTextListener('servInput');</script>
 			<datalist id = 'servers'>
 				<option value = 'Aegwynn'>Aegwynn</option>
@@ -298,8 +324,8 @@
 		</div>
 
 		<!-- specialization name input -->
-		<div class = 'specText' id = 'spec'>Specialization:
-			<input type = "text" name = "specName"  list = 'specializations' class = "inputBox" id = 'specInput' value = '{{specName}}' autocomplete = 'off'>
+		<div class = 'text' id = 'spec'>Specialization:
+			<input type = "text" name = "specName"  list = 'specializations' class = "inputText" id = 'specInput' value = '{{specName}}' autocomplete = 'off'>
 			<script>selectTextListener('specInput');</script>
 			<datalist id = 'specializations'>
 					<option value = 'Affliction'>Affliction</option>
@@ -341,10 +367,10 @@
 		</div>
 
 		<!-- run button -->
-		<input type = "submit" value = "Run" class = "buttonStyle" id = 'runBtn'>
+		<input type = "submit" value = "Run" id = 'runBtn'/>
 
 		<!-- metric type drop down menu -->
-		<div class = "metricText" id = 'met'>Performance Metric:
+		<div class = "text" id = 'met'>Performance Metric:
 			<select metricSelected = "Metric" type = 'text' name = "metricSelected" class = 'dropdownMenu' id = 'drpMet'>
 				<option value = {{metric}}>{{metric}}</option>
 				<option value = "DPS">DPS</option>
@@ -354,7 +380,7 @@
 		</div>
 
 		<!-- minimum key level drop down menu -->
-		<div class = "keyLvlText" id = 'keyLvl'>Minimum Key Level:
+		<div class = "text" id = 'keyLvl'>Minimum Key Level:
 			<select keyLvlSelected = "KeyLvl" type = 'int' name = 'minKeyLvlSelected' class = 'dropdownMenu' id = 'keyLvlCo'>
 				<option value = {{keyLvlCo}}>{{keyLvlCo}}</option>
 				<option value = 2>2</option>
@@ -370,69 +396,90 @@
 			<script type="text/javascript"> remDupe('keyLvlCo'); </script>
 		</div>
 		
-	</div>
-
-	<!-- the options menu wrapper -->
-	<div class = 'togWrapper' id = 'togWrapper'>
+		<!-- description text ***change this eventually dingus -->
+		<div id = 'descriptionText'>
+			Logle is a web application that utilizes the Warcraft Logs API to quickly crawl through all dungeon logs of the requested player. <br>
+			It then reports their highest keyLvl parses achieved per dungeon along with an average in the center block. <br>
+			Only timed dungeons that are of equal or greater key level set by the minimum key level will be considered.<br><br>
+			Specialization is not necessary, but will restrict the crawl to only that spec. <br><br>
+			Program by Scriptis (Kilpatrick-Area-52)
+		</div>
 	
-		<!-- specialization toggle option -->
-		<label class = 'checkboxContainer'>Specialization:
-			<input type = 'checkbox' onclick = 'toggleSpecialization();' id = 'specToggle' name = 'specToggle'></input>
-			<script>checkBoxStatus('specToggle', '{{specTog}}');toggleSpecialization();updateStateListener('specToggle')</script>
-			
-			<img class = 'unchecked'></img>
-			<img class = 'checked'></img>
-			<img class = 'uncheckedHover'></img>
-			<img class = 'checkedHover'></img>
-		</label>
 		
-		<!-- raiderIO toggle option -->
-		<label class = 'checkboxContainer'>RaiderIO:
-			<input type = 'checkbox' onclick = 'toggleRio();' id = 'rioToggle' name = 'rioToggle'></input>
-			<script>checkBoxStatus('rioToggle', '{{rioTog}}');updateStateListener('rioToggle');</script>
-			
-			<img class = 'unchecked'></img>
-			<img class = 'checked'></img>
-			<img class = 'uncheckedHover'></img>
-			<img class = 'checkedHover'></img>
-		</label>
-
-		<!-- autorun on paste for raiderIO toggle option -->
-		<label class = 'checkboxContainer' id = 'pasteRioCont'>Paste Autorun:
-			<input type = 'checkbox' onclick = 'togglePasteRio();' id = 'pasteRioToggle' name = 'pasteRioToggle'></input>
-			<script>checkBoxStatus('pasteRioToggle', '{{pasteRioTog}}');toggleRio();togglePasteRio();</script>
-			
-			<img class = 'unchecked'></img>
-			<img class = 'checked'></img>
-			<img class = 'uncheckedHover'></img>
-			<img class = 'checkedHover'></img>
-		</label>
 		
-		<!-- updates the grid layout based on options when the site loads -->
-		<script>updateState();</script>
+		
+		
+		
+		
+		<!-- the options menu wrapper -->
+		<div id = 'togGrid'>
+		
+			<!-- Avoidable Deaths toggle option -->
+			<label class = 'checkboxContainer'>Avoidable Deaths:
+				<input type = 'checkbox' onclick = 'toggleAvoidableDeaths();fade("specCont", "0");' id = 'avoidableDeathsToggle' name = 'avoidableDeathsToggle'></input>
+				<script>checkBoxStatus('avoidableDeathsToggle', '{{avoidableDeathsTog}}');updateStateListener('avoidableDeathsToggle')</script>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
+		
+		
+			<!-- specialization toggle option -->
+			<label class = 'checkboxContainer' id = 'specCont'>Specialization:
+				<input type = 'checkbox' onclick = 'toggleSpecialization();' id = 'specToggle' name = 'specToggle'></input>
+				<script>checkBoxStatus('specToggle', '{{specTog}}');toggleSpecialization();updateStateListener('specToggle')</script>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
+			
+			<!-- raiderIO toggle option -->
+			<label class = 'checkboxContainer' id = 'rioCont'>RaiderIO:
+				<input type = 'checkbox' onclick = 'toggleRio();fade("pasteRioCont", "0");' id = 'rioToggle' name = 'rioToggle'></input>
+				<script>checkBoxStatus('rioToggle', '{{rioTog}}');updateStateListener('rioToggle');</script>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
 
-	</div>	
-	<!-- the gear icon that is used to toggle the visibility of the options menu wrapper -->
-	<div class = 'togTogBox'>
-		<label class = 'togTogContainer'>
-			<input type = 'checkbox' onclick = 'toggleOptions();' id = 'togOptions'></input>
-			<script>toggleOptions();</script>
-			<img class = 'togTogUnchecked'></img>
-			<img class = 'togTogChecked'></img>
-			<img class = 'togTogUncheckedHover'></img>
-			<img class = 'togTogCheckedHover'></img>
-		</label>
-	</div>
+			<!-- autorun on paste for raiderIO toggle option -->
+			<label class = 'checkboxContainer' id = 'pasteRioCont'>Paste Autorun:
+				<input type = 'checkbox' onclick = 'togglePasteRio();' id = 'pasteRioToggle' name = 'pasteRioToggle'></input>
+				<script>checkBoxStatus('pasteRioToggle', '{{pasteRioTog}}');toggleRio();togglePasteRio();toggleAvoidableDeaths();</script>
+				
+				<img class = 'unchecked'></img>
+				<img class = 'checked'></img>
+				<img class = 'uncheckedHover'></img>
+				<img class = 'checkedHover'></img>
+			</label>
+			
 
-	<!-- description text ***change this eventually dingus -->
-	<div class = 'descriptionText'>
-		Logle is a web application that utilizes the Warcraft Logs API to quickly crawl through all dungeon logs of the requested player. <br>
-		It then reports their highest keyLvl parses achieved per dungeon along with an average in the center block. <br>
-		Only timed dungeons that are of equal or greater key level set by the minimum key level will be considered.<br><br>
-		Specialization is not necessary, but will restrict the crawl to only that spec. <br><br>
-		Program by Scriptis (Kilpatrick-Area-52)
+			
+			<!-- updates the grid layout based on options when the site loads -->
+			<script>updateState();</script>
+
+		</div>	
+		<!-- the gear icon that is used to toggle the visibility of the options menu wrapper -->
+		<div id = 'togTogBox'>
+			<label id = 'togTogContainer'>
+				<input type = 'checkbox' onclick = 'toggleOptions();fade("togGrid", "0");fade("togTogContainer", "0");' id = 'togOptions'></input>
+				<script>toggleOptions();</script>
+				<img id = 'togTogUnchecked'></img>
+				<img id = 'togTogChecked'></img>
+				<img id = 'togTogUncheckedHover'></img>
+				<img id = 'togTogCheckedHover'></img>
+			</label>
+		</div>
+
+
+		<!-- changes the content wrapper layout whenever the orientation of the device is changed -->
+		<script>screen.orientation.addEventListener("change", updateState);</script>
+			
 	</div>
-	
-	<!-- changes the content wrapper layout whenever the orientation of the device is changed -->
-	<script>screen.orientation.addEventListener("change", updateState);</script>
 {% endblock %}
